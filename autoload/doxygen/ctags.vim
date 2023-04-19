@@ -12,9 +12,9 @@ let g:doxygen_clone_destiny_dir = './.project-documentation'
 let g:doxygen_auto_regen = 1
 let g:doxygen_cmd = 'cd ./.project-documentation/doxygen-conf/ && doxygen ./doxyfile.dox'
 
-" Doxygen - KB Shortcuts
-let g:doxygen_shortcut_regen = "<C-h>"
-let g:doxygen_shortcut_open = "<C-k>"
+" Doxygen - KB Shortcuts → let's not define them by default
+"let g:doxygen_shortcut_regen = '<C-h>'
+"let g:doxygen_shortcut_open = '<C-k>'
 
 " Doxygen - Open on browser
 let g:doxygen_browser_cmd = 'xdg-open'
