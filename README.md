@@ -14,7 +14,7 @@ g:doxygen_auto_setup = 0
 
 " OPTIONAL: You can provide a custom doxyfile.
 let g:doxygen_clone_config_repo = 'https://github.com/Zeioth/doxygenvim-template.git'
-let g:doxygen_clone_subdir = ''
+let g:doxygen_clone_destiny_dir = ''
 let g:doxygen_clone_cmd = 'git clone'
 
 " Shortcuts to open and generate docs (DISALED BY DEFAULT)
