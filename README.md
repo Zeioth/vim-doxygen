@@ -12,14 +12,14 @@ Enable automated doxyfile generation
 " Create a default doxigen config for the current project (DISABLED BY DEFAULT)
 g:doxygen_auto_setup = 0
 
-" Shortcuts to open and generate docs (DISALED BY DEFAULT)
-let g:doxygen_shortcut_open = '<C-R>'
-let g:doxygen_shortcut_generate = '<C-G>'
-
 " OPTIONAL: You can provide a custom doxyfile.
 let g:doxygen_clone_config_repo = 'https://github.com/Zeioth/doxygenvim-template.git'
 let g:doxygen_clone_subdir = ''
 let g:doxygen_clone_cmd = 'git clone'
+
+" Shortcuts to open and generate docs (DISALED BY DEFAULT)
+let g:doxygen_shortcut_open = '<C-R>'
+let g:doxygen_shortcut_generate = '<C-G>'
 ```
    
 Enable automated doc generation on save
