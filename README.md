@@ -47,3 +47,10 @@ g:project_root=".git"
 
 ## Credits
 This project is a hack of [vim-guttentags](https://github.com/ludovicchabant/vim-gutentags). We take most base functions from that project so please support the the author.
+
+
+## TODOS
+
+* On clone, we must delete the .git directory and similar, to avoid problems.
+* The bootstrap version seems outdated. We should distribute a default doxyfile.
+* Clone only if the directory doesn't exist already.
