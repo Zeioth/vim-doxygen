@@ -324,11 +324,11 @@ function! doxygen#setup_doxygen() abort
     let l:bn = bufnr('%')
     execute 'augroup doxygen_buffer_' . l:bn
     execute '  autocmd!'
-    execute '  autocmd BufWritePost <buffer=' . l:bn . '> call s:write_triggered_update_tags(' . l:bn . ')'
+    execute '  autocmd BufWritePost <buffer=' . l:bn . '> call s:write_triggered_update_doxyfile(' . l:bn . ')'
     execute 'augroup end'
 
     " Miscellaneous commands.
-    command! -buffer -bang DoxygenUpdate :call s:manual_update_tags(<bang>0)
+    command! -buffer -bang DoxygenUpdate :call s:manual_update_doxyfile(<bang>0)
 
     " Add these tags files to the known tags files.
     for module in keys(b:doxygen_files)
@@ -341,10 +341,10 @@ function! doxygen#setup_doxygen() abort
             if g:doxygen_enabled
                 if g:doxygen_generate_on_missing && !filereadable(l:tagfile)
                     call doxygen#trace("Generating missing tags file: " . l:tagfile)
-                    call s:update_tags(l:bn, module, 1, 1)
+                    call s:update_doxyfile(l:bn, module, 1, 1)
                 elseif g:doxygen_generate_on_new
                     call doxygen#trace("Generating tags file: " . l:tagfile)
-                    call s:update_tags(l:bn, module, 1, 1)
+                    call s:update_doxyfile(l:bn, module, 1, 1)
                 endif
             endif
         endif
@@ -450,7 +450,7 @@ function! doxygen#remove_job(module, job_idx) abort
         if bufexists(l:qu_info[1])
             call doxygen#trace("Finished ".a:module." job, ".
                         \"running queued update for '".l:tags_file."'.")
-            call s:update_tags(l:qu_info[1], a:module, l:qu_info[2], 2)
+            call s:update_doxyfile(l:qu_info[1], a:module, l:qu_info[2], 2)
         else
             call doxygen#trace("Finished ".a:module." job, ".
                         \"but skipping queued update for '".l:tags_file."' ".
@@ -474,7 +474,7 @@ endfunction
 "  Tags File Management {{{
 
 " (Re)Generate the tags file for the current buffer's file.
-function! s:manual_update_tags(bang) abort
+function! s:manual_update_doxyfile(bang) abort
     let l:restore_prev_trace = 0
     let l:prev_trace = g:doxygen_trace
     if &verbose > 0
@@ -485,7 +485,7 @@ function! s:manual_update_tags(bang) abort
     try
         let l:bn = bufnr('%')
         for module in g:doxygen_modules
-            call s:update_tags(l:bn, module, a:bang, 0)
+            call s:update_doxyfile(l:bn, module, a:bang, 0)
         endfor
         silent doautocmd User doxygenUpdating
     finally
@@ -496,25 +496,25 @@ function! s:manual_update_tags(bang) abort
 endfunction
 
 " (Re)Generate the tags file for a buffer that just go saved.
-function! s:write_triggered_update_tags(bufno) abort
+function! s:write_triggered_update_doxyfile(bufno) abort
     if g:doxygen_enabled && g:doxygen_generate_on_write
         for module in g:doxygen_modules
-            call s:update_tags(a:bufno, module, 0, 2)
+            call s:update_doxyfile(a:bufno, module, 0, 2)
         endfor
     endif
     silent doautocmd User doxygenUpdating
 endfunction
 
-" Update the tags file for the current buffer's file.
+" Update the doxyfile for the current buffer's file.
 " write_mode:
-"   0: update the tags file if it exists, generate it otherwise.
-"   1: always generate (overwrite) the tags file.
+"   0: update the doxyfile if it exists, generate it otherwise.
+"   1: always generate (overwrite) the doxyfile.
 "
 " queue_mode:
 "   0: if an update is already in progress, report it and abort.
 "   1: if an update is already in progress, abort silently.
 "   2: if an update is already in progress, queue another one.
-function! s:update_tags(bufno, module, write_mode, queue_mode) abort
+function! s:update_doxyfile(bufno, module, write_mode, queue_mode) abort
     " Figure out where to save.
     let l:buf_doxygen_files = getbufvar(a:bufno, 'doxygen_files')
     let l:tags_file = l:buf_doxygen_files[a:module]
@@ -557,10 +557,13 @@ function! s:update_tags(bufno, module, write_mode, queue_mode) abort
     let l:prev_cwd = getcwd()
     call doxygen#chdir(l:proj_dir)
     try
+
         " Clone the doxygen config into the project where specified.
-        let g:doxygen_clone_template_cmd = g:doxygen_clone_cmd . " " . g:doxygen_clone_config_repo . " " . g:doxygen_clone_subdir
-        call system(g:doxygen_clone_template_cmd)
-        
+        if g:doxygen_auto_setup == 1
+          let g:doxygen_clone_template_cmd = g:doxygen_clone_cmd . " " . g:doxygen_clone_config_repo . " " . g:doxygen_clone_subdir
+          call system(g:doxygen_clone_template_cmd)
+        endif       
+
     catch /^doxygen\:/
         echom "Error while generating ".a:module." file:"
         echom v:exception
