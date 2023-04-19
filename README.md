@@ -31,7 +31,7 @@ Specify a custom command to generate the doxygen documentation (optional)
 
 ```
 " By default: it will take the <config-file> of your g:doxygen_clone_config_repo
-g:doxygen:cmd = "doxygen -g <config-file>"
+g:doxygen_cmd = "doxygen -g <config-file>"
 ```
 
 Change the way the root of the project is detected (optional)
