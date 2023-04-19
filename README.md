@@ -55,8 +55,6 @@ This project is a hack of [vim-guttentags](https://github.com/ludovicchabant/vim
 
 ## TODOS
 
-* Feature: Command to generate docs manually.
-* Feature: Command to open the docs on the browser.
 * Clear boilerplate we don't need.
 
 ## Bugs 
