@@ -24,13 +24,15 @@ let g:doxygen_clone_cmd = 'git clone'
    
 Enable automated doc generation on save
 ```
+" By default, the docs can be accessed on "./.project-documentation/html/index.html".
+" This is defined in doxifile.dox
 g:doxygen_auto_regen = 1
 ```
 
 Specify a custom command to generate the doxygen documentation (optional)
 
 ```
-" By default: it will take the <config-file> of your g:doxygen_clone_config_repo
+" By default: ./.project-documentation/doxigen-conf/doxifile.dox"
 g:doxygen_cmd = "doxygen -g <config-file>"
 ```
 
