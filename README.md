@@ -1,4 +1,4 @@
-# doxygen-vim - (WIP, please be patient)
+# vim-doxygen - (WIP, please be patient)
 Your doxygen documentation on vim. 
 
 ## Documentation
@@ -24,14 +24,16 @@ let g:doxygen_clone_cmd = 'git clone'
    
 Enable automated doc generation on save
 ```
+" By default, the docs can be accessed on "./.project-documentation/html/index.html".
+" This is defined in doxifile.dox
 g:doxygen_auto_regen = 1
 ```
 
 Specify a custom command to generate the doxygen documentation (optional)
 
 ```
-" By default: it will take the <config-file> of your g:doxygen_clone_config_repo
-g:doxygen:cmd = "doxygen -g <config-file>"
+" By default: ./.project-documentation/doxigen-conf/doxifile.dox"
+g:doxygen_cmd = "doxygen -g <config-file>"
 ```
 
 Change the way the root of the project is detected (optional)
@@ -44,4 +46,4 @@ g:project_root=".git"
 **IMPORTANT**: Please, note that even though g:doxygen_auto_setup will setup doxygen for you, you are still responsable for adding your doxygen directory to the .gitignore if you don't want it to be pushed by accident.
 
 ## Credits
-This project takes a LOT of boilerplate functions from [vim-guttentags](https://github.com/ludovicchabant/vim-gutentags) to avoid reinventing the wheeel. So please support the the author of that plugin too.
+This project is a hack of [vim-guttentags](https://github.com/ludovicchabant/vim-gutentags). We take most base functions from that project so please support the the author.
