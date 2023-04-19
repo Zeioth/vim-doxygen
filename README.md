@@ -56,6 +56,7 @@ This project is a hack of [vim-guttentags](https://github.com/ludovicchabant/vim
 ## TODOS
 
 * Clear boilerplate we don't need.
+* Record a cool video.
 
 ## Bugs 
 * On clone, we must delete the .git directory and similar, to avoid problems.
