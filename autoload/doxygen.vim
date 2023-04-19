@@ -559,10 +559,17 @@ function! s:update_doxyfile(bufno, module, write_mode, queue_mode) abort
     try
 
         " Clone the doxygen config into the project where specified.
+        " TODO: Only if directory doesn't exist already
         if g:doxygen_auto_setup == 1
-          let g:doxygen_clone_template_cmd = g:doxygen_clone_cmd . " " . g:doxygen_clone_config_repo . " " . g:doxygen_clone_subdir
+          let g:doxygen_clone_template_cmd = g:doxygen_clone_cmd . " " . g:doxygen_clone_config_repo . " " . g:doxygen_clone_destiny_dir
           call system(g:doxygen_clone_template_cmd)
         endif       
+
+        " Generate dos the doxygen docs into the project where specified.
+        if g:doxygen_auto_regen == 1
+          call system(g:doxygen_cmd)
+        endif       
+
 
     catch /^doxygen\:/
         echom "Error while generating ".a:module." file:"

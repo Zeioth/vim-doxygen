@@ -2,18 +2,20 @@
 
 " Global Options {{{
 
+" DONE
 let g:doxygen_auto_setup = 1
 let g:doxygen_clone_config_repo = 'https://github.com/Zeioth/doxygenvim-template.git'
 let g:doxygen_clone_cmd = 'git clone'
-let g:doxygen_clone_subdir = ''
+let g:doxygen_clone_destiny_dir = './.project-documentation'
+
+" TODO: Doxygen - Autoregen
+let g:doxygen_auto_regen = 1
+let g:doxygen_cmd = 'cd ./.project-documentation/doxygen-conf/ && doxygen ./doxyfile.dox'
 
 " Doxygen - KB Shortcuts
 let g:doxygen_shortcut_run = ''
 let g:doxygen_shortcut_generate = ''
 
-" Doxygen - Autoregen
-let g:doxygen_auto_regen = 1
-let g:doxygen_cmd = "doxygen -g <config-file>"
 
 " TODO: Use the one guttentags defined already
 " g:project_root=".git"
