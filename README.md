@@ -53,6 +53,9 @@ This project is a hack of [vim-guttentags](https://github.com/ludovicchabant/vim
 
 * Feature: Command to generate docs manually.
 * Feature: Command to open the docs on the browser.
+* Clear boilerplate we don't need.
+
+## Bugs 
 * On clone, we must delete the .git directory and similar, to avoid problems.
 * The bootstrap version seems outdated. We should distribute a default doxyfile.
 * Clone only if the directory doesn't exist already.
