@@ -10,12 +10,11 @@ Enable automated doxyfile generation
    
 ``` 
 " Create a default doxigen config for the current project (DISABLED BY DEFAULT)
-g:doxygen_auto_setup = 1
+g:doxygen_auto_setup = 0
 
 " Shortcuts to open and generate docs (DISALED BY DEFAULT)
 let g:doxygen_shortcut_open = '<C-R>'
 let g:doxygen_shortcut_generate = '<C-G>'
-
 
 " OPTIONAL: You can provide a custom doxyfile.
 let g:doxygen_clone_config_repo = 'https://github.com/Zeioth/doxygenvim-template.git'
@@ -35,7 +34,7 @@ Specify a custom command to generate the doxygen documentation (optional)
 g:doxygen:cmd = "doxygen -g <config-file>"
 ```
 
-Change the way the root of the project is detected
+Change the way the root of the project is detected (optional)
 
 ``` 
 " By default, we detect the root of the project where the first .git file is found
