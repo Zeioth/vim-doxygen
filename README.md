@@ -20,6 +20,10 @@ let g:doxygen_clone_cmd = 'git clone'
 " Shortcuts to open and generate docs (DISALED BY DEFAULT)
 let g:doxygen_shortcut_open = '<C-R>'
 let g:doxygen_shortcut_generate = '<C-G>'
+
+" You can configure how the docs are open when using g:doxygen_shortcut_open
+let g:doxygen_browser_cmd = 'xdg-open'
+let g:doxygen_browser_file = './.project-documentation/html/index.html'
 ```
    
 Enable automated doc generation on save
@@ -32,7 +36,7 @@ g:doxygen_auto_regen = 1
 Specify a custom command to generate the doxygen documentation (optional)
 
 ```
-" By default: ./.project-documentation/doxigen-conf/doxifile.dox"
+" By default: 'cd ./.project-documentation/doxygen-conf/ && doxygen ./doxyfile.dox'
 g:doxygen_cmd = "doxygen -g <config-file>"
 ```
 
@@ -40,7 +44,7 @@ Change the way the root of the project is detected (optional)
 
 ``` 
 " By default, we detect the root of the project where the first .git file is found
-g:project_root=".git"
+g:doxygen_project_root=".git"
 ```
    
 **IMPORTANT**: Please, note that even though g:doxygen_auto_setup will setup doxygen for you, you are still responsable for adding your doxygen directory to the .gitignore if you don't want it to be pushed by accident.
