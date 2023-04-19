@@ -65,3 +65,6 @@ This project is a hack of [vim-guttentags](https://github.com/ludovicchabant/vim
 
 ## Improvements
 * If the user tries to open the doxigen web and it has not been generated yet, echo an error.
+
+## Help needed
+* Windows support: It should be functional, but if it isn't, please consider submitting a PR so everyone can benefit.
