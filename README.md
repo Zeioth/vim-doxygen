@@ -62,3 +62,6 @@ This project is a hack of [vim-guttentags](https://github.com/ludovicchabant/vim
 * On clone, we must delete the .git directory and similar, to avoid problems.
 * The bootstrap version seems outdated. We should distribute a default doxyfile.
 * Clone only if the directory doesn't exist already.
+
+## Improvements
+* If the user tries to open the doxigen web and it has not been generated yet, echo an error.
