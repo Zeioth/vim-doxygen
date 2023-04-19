@@ -328,7 +328,13 @@ function! doxygen#setup_doxygen() abort
     execute 'augroup end'
 
     " Miscellaneous commands.
-    command! -buffer -bang DoxygenUpdate :call s:manual_update_doxyfile(<bang>0)
+    command! -buffer -bang DoxygenRegen :call s:manual_doxygen_regen(<bang>0)
+    command! -buffer -bang DoxygenOpen :call s:doxygen_open()
+
+    " Keybindings
+    nmap <silent> g:doxygen_shortcut_regen :<C-u>DoxygenRegen<CR>
+    nmap <silent> g:doxygen_shortcut_open :<C-u>DoxygenOpen<CR>
+
 
     " Add these tags files to the known tags files.
     for module in keys(b:doxygen_files)
@@ -471,10 +477,10 @@ endfunction
 
 " }}}
 
-"  Tags File Management {{{
+"  Doxygen Management {{{
 
-" (Re)Generate the tags file for the current buffer's file.
-function! s:manual_update_doxyfile(bang) abort
+" (Re)Generate the docs for the current project.
+function! s:manual_doxygen_regen(bang) abort
     let l:restore_prev_trace = 0
     let l:prev_trace = g:doxygen_trace
     if &verbose > 0
@@ -495,17 +501,28 @@ function! s:manual_update_doxyfile(bang) abort
     endtry
 endfunction
 
-" (Re)Generate the tags file for a buffer that just go saved.
+" Open doxygen in the browser.
+function! s:doxygen_open() abort
+    try
+        let l:bn = bufnr('%')
+        let l:proj_dir = getbufvar(l:bn, 'doxygen_root')
+        echo g:doxygen_browser_cmd . ' ' . l:proj_dir . g:doxygen_browser_file
+        call system(g:doxygen_browser_cmd . ' ' . l:proj_dir . g:doxygen_browser_file)
+    endtry
+endfunction
+
+
+" (re)generate the tags file for a buffer that just go saved.
 function! s:write_triggered_update_doxyfile(bufno) abort
     if g:doxygen_enabled && g:doxygen_generate_on_write
         for module in g:doxygen_modules
             call s:update_doxyfile(a:bufno, module, 0, 2)
         endfor
     endif
-    silent doautocmd User doxygenUpdating
+    silent doautocmd user doxygenupdating
 endfunction
 
-" Update the doxyfile for the current buffer's file.
+" update the doxyfile for the current buffer's file.
 " write_mode:
 "   0: update the doxyfile if it exists, generate it otherwise.
 "   1: always generate (overwrite) the doxyfile.
@@ -515,12 +532,12 @@ endfunction
 "   1: if an update is already in progress, abort silently.
 "   2: if an update is already in progress, queue another one.
 function! s:update_doxyfile(bufno, module, write_mode, queue_mode) abort
-    " Figure out where to save.
+    " figure out where to save.
     let l:buf_doxygen_files = getbufvar(a:bufno, 'doxygen_files')
     let l:tags_file = l:buf_doxygen_files[a:module]
     let l:proj_dir = getbufvar(a:bufno, 'doxygen_root')
 
-    " Check that there's not already an update in progress.
+    " check that there's not already an update in progress.
     let l:in_progress_idx = doxygen#find_job_index_by_tags_file(
                 \a:module, l:tags_file)
     if l:in_progress_idx >= 0

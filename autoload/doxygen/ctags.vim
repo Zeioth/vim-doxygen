@@ -3,7 +3,7 @@
 " Global Options {{{
 
 " DONE
-let g:doxygen_auto_setup = 1
+let g:doxygen_auto_setup = 0
 let g:doxygen_clone_config_repo = 'https://github.com/Zeioth/doxygenvim-template.git'
 let g:doxygen_clone_cmd = 'git clone'
 let g:doxygen_clone_destiny_dir = './.project-documentation'
@@ -13,12 +13,15 @@ let g:doxygen_auto_regen = 1
 let g:doxygen_cmd = 'cd ./.project-documentation/doxygen-conf/ && doxygen ./doxyfile.dox'
 
 " Doxygen - KB Shortcuts
-let g:doxygen_shortcut_run = ''
-let g:doxygen_shortcut_generate = ''
+let g:doxygen_shortcut_regen = "<C-h>"
+let g:doxygen_shortcut_open = "<C-k>"
 
+" Doxygen - Open on browser
+let g:doxygen_browser_cmd = 'xdg-open'
+let g:doxygen_browser_file = '/.project-documentation/html/index.html'
 
 " TODO: Use the one guttentags defined already
-" g:project_root=".git"
+" g:doxygen_project_root=".git"
 
 
 
