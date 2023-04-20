@@ -31,50 +31,12 @@
 
 doxygen is a plugin that takes care of the management of doxygen
 documentation in Vim. It will (re)generate doxygen documentation as you work
-while staying completely out of your way. It has no dependencies and
-just works.
+while staying completely out of your way.
 
 In order to generate documentation, doxygen will have to figure out what's in
 your project. To do this, it will locate well-known project root markers like
 SCM folders (.git, .hg, etc.), any custom tags you define (with
 |doxygen_project_root|).
-
-1.1 Requirements
-                                                *doxygen-ctags-requirements*
-
-If you're using the `ctags` modules (which is the default and only working one
-at this point, really), you will need a `tags` generator that supports the
-following arguments:
-
-* `-f` (to specify the output file)
-* `--append` (to append to an existing file while keeping it sorted)
-* `--exclude` (to exclude file patterns)
-* `--options` (to specify an options file)
-
-This means you probably want Exuberant Ctags or Universal Ctags. The basic
-old BSD Ctags WON'T WORK. Other language-specific versions may or may not
-work. Check with their help or man page.
-
-
-1.2 Similar Plugins
-                                                *doxygen-similar-plugins*
-
-There are some similar Vim plugins out there ("vim-tags", "vim-autotag",
-"vim-automatic-ctags", etc.). They all fail on one or more of the requirements
-I set for myself with doxygen:
-
-* No other dependency than running Vim: no Python, Ruby, or whatever.
-* Cross-platform: should work on at least Mac and Windows.
-* Incremental tags generation: don't re-generate the whole project all the
-  time. This may be fine for small projects, but it doesn't scale.
-* External process management: if the ctags process is taking a long time,
-  don't run another one because I saved the file again.
-* Keep the tag file consistent: don't just append the current file's tags to
-  the tag file, otherwise you will still "see" tags for deleted or renamed
-  classes and functions.
-* Automatically create the tag file: you open something from a freshly forked
-  project, it should start indexing it automatically, just like in Sublime Text
-  or Visual Studio or any other IDE.
 
 
 =============================================================================
