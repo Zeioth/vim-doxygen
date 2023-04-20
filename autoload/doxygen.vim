@@ -192,8 +192,8 @@ function! doxygen#setup_doxygen() abort
             call doxygen#trace("no valid project root.. no doxygen support.")
             return
         endif
-        if filereadable(b:doxygen_root . '/.nodoxigen')
-            call doxygen#trace("'.nodoxigen' file found... no doxygen support.")
+        if filereadable(b:doxygen_root . '/.nodoxygen')
+            call doxygen#trace("'.nodoxygen' file found... no doxygen support.")
             return
         endif
 

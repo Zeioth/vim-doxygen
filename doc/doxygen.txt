@@ -1,4 +1,4 @@
-*doxygen.txt*  Automatic ctags management for VIM
+*doxygen.txt*  Automatic Doxygen management for VIM
 
         ,---,
       ,---.'|   ,---.                                                ,---,
@@ -16,15 +16,14 @@
 
 
                 DOXYGEN REFERENCE MANUAL
-                    by Ludovic Chabant
+                    by Adrian Lopez
 
                                                 *doxygen*
 
 1. Introduction             |doxygen-intro|
 2. Commands                 |doxygen-commands|
-3. Status Line              |doxygen-status-line|
-4. Global Settings          |doxygen-settings|
-5. Project Settings         |doxygen-project-settings|
+3. Global Settings          |doxygen-settings|
+4. Project Settings         |doxygen-project-settings|
 
 =============================================================================
 1. Introduction                                 *doxygen-intro*
@@ -35,7 +34,7 @@ while staying completely out of your way.
 
 In order to generate documentation, doxygen will have to figure out what's in
 your project. To do this, it will locate well-known project root markers like
-SCM folders (.git, .hg, etc.), any custom tags you define (with
+SCM folders (.git, .hg, etc.), any custom markers you define (with
 |doxygen_project_root|).
 
 
@@ -52,48 +51,36 @@ following commands and remarks don't apply.
 
 If you want to force-disable doxygen for a given project even though it does
 match one of the items in |doxygen_project_root|, create a file named
-"`.notags`" at the root of the project.
+"`.nodoxygen`" at the root of the project.
 
-The tag file that doxygen creates and manages will be named after
-|doxygen_ctags_tagfile|, relative to the project's root directory. When
-doxygen finds a valid project root, it will prepend the tag file's path to
-'tags', unless |doxygen_ctags_auto_set_tags| is set to 0. This is to make
-sure Vim will use that file first.
+                                                *:DoxygenRegen*
+:DoxygenRegen
+                        Manually (re)generate the Doxygen documentation.
+                        This can be useful when |doxygen_auto_regen| is set to
+                        0.
 
-If a file managed by doxygen is opened and no tag file already exists,
-doxygen will start generating it right away in the background, unless
-|doxygen_generate_on_missing| is set to 0. If you have a large project, you
-may want to know when doxygen is generating tags: see
-|doxygen-status-line| to display an indicator in your status line.
-
-When a file managed by doxygen is saved, the tag file will be incrementally
-updated, i.e. references to the recently saved file are removed, and that file
-is re-parsed for tags, with the result being merged into the tag file. This
-makes the tag file 100% consistent with the latest changes. This doesn't
-happen however if |doxygen_generate_on_write| is set to 0, in which case you
-have to run |doxygenUpdate| manually.
-
-
-                                                *:doxygenUpdate*
-:doxygenUpdate
-                        Forces an update of the current tag file with the
-                        current buffer. If tags are already being generated,
-                        you will be notified and the command will abort.
-
-:doxygenUpdate!
-                        Like |doxygenUpdate|, but updates the current tags
-                        file with the whole project instead of just the
-                        current buffer.
 
 
 Some debugging/troubleshooting commands are also available if the
 |doxygen_define_advanced_commands| global setting is set to 1.
 
+:DoxygenOpen
+                        Opens the documentation file on the browser. Both the
+                        file and the browser can be customized with
+                        |doxygen_browser_file| and |doxygen_browser_cmd|.
+
+
+
+
+Some debugging/troubleshooting commands are also available if the
+|doxygen_define_advanced_commands| global setting is set to 1.
+
+
                                                 *:doxygenToggleEnabled*
-:doxygenToggleEnabled
+:DoxygenToggleEnabled
                         Disables and re-enables doxygen.
-                        When doxygen is disabled, it won't update your tag
-                        file when you save a buffer. It will however still
+                        When doxygen is disabled, it won't (re)generate
+                        doxygen when you save a buffer. It will however still
                         look for project markers as you open new buffers so
                         that they can start working again when you re-enable
                         doxygen.
@@ -102,102 +89,20 @@ Some debugging/troubleshooting commands are also available if the
                         |doxygen_define_advanced_commands| is set}
 
                                                 *doxygenToggleTrace*
-:doxygenToggleTrace
+:DoxygenToggleTrace
                         If you want to keep an eye on what doxygen is doing,
                         you can enable tracing. This will show messages every
                         time doxygen does something. It can get annoying
                         quickly, since it will require you to press a key to
                         dismiss those messages, but it can be useful to
                         troubleshoot a problem.
-                        In addition to messages in Vim, it will also make
-                        doxygen redirect the output of the tag generation
-                        script to a `.log` file in the project root.
 
                         {only available when
                         |doxygen_define_advanced_commands| is set}
 
 
-doxygen also has some user auto-commands (see |User| and |:doautocmd|):
-
-                                                *doxygenUpdating*
-doxygenUpdating
-                        This auto-command is triggered when a background
-                        update job has started.
-
-                                                *doxygenUpdated*
-doxygenUpdated
-                        This auto-command is triggered when a background
-                        update job has finished.
-
-
 =============================================================================
-3.  Status Line                                 *doxygen-status-line*
-
-Tag file generation can take a while if you're working on a project big
-enough. In that case, you may want to know when `ctags` is running, so you
-have a heads up if some of the tags aren't recognized yet.
-
-                                                *doxygen#statusline()*
-You can display an indicator of tag generation progress in your |status-line|
-with the following function: >
-        :set statusline+=%{doxygen#statusline()}
-
-The function will, by default, print a list of modules in the status line. So
-if the `ctags` module (see |g:doxygen_modules|) is currently generating
-a tags file, you will see "ctags" printed in the status line. If nothing is
-happening, nothing will be printed in the status line.
-
-You can pass some parameters to customize this:
-
-1. A prefix string (defaults to `""`).
-2. A suffix string (defaults to `""`).
-3. The text to print (defaults to the names of modules currently generating
-   something).
-
-So using `doxygen#statusline('[', ']')` would print `"[ctags]"` instead of
-`"ctags"`.
-
-Because doxygen runs the tag generation in the background, the statusline
-indicator might stay there even after the background process has ended. It
-would only go away when Vim decides to refresh the statusline. You can force
-refresh it in a callback on |doxygenUpdating| and |doxygenUpdated|.
-
-For instance, with the `lightline` plugin:
-
-        augroup MydoxygenStatusLineRefresher
-            autocmd!
-            autocmd User doxygenUpdating call lightline#update()
-            autocmd User doxygenUpdated call lightline#update()
-        augroup END
-
-                                                *doxygen#statusline_cb*
-As an alternative to the previous function, `doxygen#statusline_cb` takes
-a single parameter which should be a |Funcref| or a function name. This
-function should take a list of active module names, and return a string. This
-lets you completely control what the status line will print.
-
-For instance:
-        function! s:get_doxygen_status(mods) abort
-            let l:msg = ''
-            if index(a:mods, 'ctags') >= 0
-               let l:msg .= '♨'
-             endif
-             if index(a:mods, 'cscope') >= 0
-               let l:msg .= '♺'
-             endif
-             return l:msg
-        endfunction
-
-        :set statusline+=%{doxygen#statusline_cb(
-                    \function('<SID>get_doxygen_status'))}
-
-By default, the callback function doesn't get called if no tags generation is
-currently happening. You can pass `1` as a second argument so that the
-callback function is always called.
-
-
-=============================================================================
-4. Global Settings                              *doxygen-settings*
+3. Global Settings                              *doxygen-settings*
 
 The following settings can be defined in your |vimrc| to change the default
 behaviour of doxygen.
@@ -210,87 +115,30 @@ g:doxygen_enabled
                         re-enable doxygen, you won't have some buffers
                         mysteriously working while others (those open last)
                         don't.
+
                         Defaults to `1`.
 
                                                 *doxygen_trace*
 g:doxygen_trace
                         When true, doxygen will spit out debugging
                         information as Vim messages (which you can later read
-                        with |:messages|). It also runs its background scripts
-                        with extra parameters to log activity to a `tags.log`
-                        file that you can also inspect for more information.
-
-                        Note: you can run `:verbose doxygenUpdate` to
-                        temporarily set |g:doxygen_trace| to `1` for that
-                        update only.
+                        with |:messages|).
 
                         Defaults to `0`.
-
-                                                *doxygen_dont_load*
-g:doxygen_dont_load
-                        Prevents doxygen from loading at all on Vim startup.
-
-                        The difference between this and |doxygen_enabled| is
-                        that |doxygen_enabled| can be turned on and off in
-                        the same Vim session -- doxygen as a plugin stays
-                        loaded and will keep track of what happened while it
-                        was disabled. However, |doxygen_dont_load| only
-                        works on Vim startup and will prevent doxygen from
-                        loading at all, as if it wasn't there.
-
-                                                *doxygen_modules*
-g:doxygen_modules
-                        A list of modules to load with doxygen. Each module
-                        is responsible for generating a specific type of tags
-                        file.
-                        Valid values are:
-
-                        - `ctags`: generates a `tags` file using
-                          a `ctags`-compatible program like Exhuberant Ctags
-                          or Universal Ctags.
-
-                        - `cscope`: generates a code database file using
-                          `cscope`.
-
-                        - `pycscope`: generates a code database file using
-                          `pycscope`.
-
-                        - `gtags_cscope`: same as `cscope` but uses GNU's
-                          `gtags` executable and database.
-
-                        Defaults to `[ctags]`.
 
                                                 *doxygen_project_root*
 g:doxygen_project_root
                         When a buffer is loaded, doxygen will figure out if
-                        it's part of a project that should have tags managed
+                        it's part of a project that should have doxygen managed
                         automatically. To do this, it looks for "root markers"
                         in the current file's directory and its parent
                         directories. If it finds any of those markers,
-                        doxygen will be enabled for the project, and a tags
-                        file named after |doxygen_ctags_tagfile| will be
-                        created at the project root.
-                        Defaults to `[]` (an empty |List|).
-                        A list of default markers will be appended to the
-                        user-defined ones unless
-                        |doxygen_add_default_project_roots| is set to 0.
+                        doxygen will be enabled for the project, and a
+                        doxyfile directory will be created at the project root.
 
-                                            *doxygen_add_default_project_roots*
-g:doxygen_add_default_project_roots
-                        Defines whether doxygen should always define some
-                        default project roots (see |doxygen_project_root|).
-                        This can be useful to prevent unnecessary disk access
-                        when doxygen searches for a project root.
                         The default markers are:
                         `['.git', '.hg', '.svn', '.bzr', '_darcs', '_darcs', '_FOSSIL_', '.fslckout']`
 
-                                            *doxygen_add_ctrlp_root_markers*
-g:doxygen_add_ctrlp_root_markers
-                        If doxygen finds `g:ctrlp_root_markers` (used by the
-                        CtrlP plugin), it will append those root markers to
-                        the existing ones (see |g:doxygen_project_root|).
-                        Set this to 0 to stop it from happening.
-                        Defaults to 1.
 
                                                 *doxygen_exclude_filetypes*
 g:doxygen_exclude_filetypes
@@ -305,7 +153,7 @@ g:doxygen_exclude_project_root
                         A list of project roots to generally ignore. If a file
                         is opened inside one of those projects, doxygen
                         won't be activated. This is similar to placing
-                        a `.notags` file in the root of those projects, but
+                        a `.nodoxygen` file in the root of those projects, but
                         can be useful when you don't want to, or can't, place
                         such a file there.
                         Defaults to `['/usr/local', '/opt/homebrew', '/home/linuxbrew/.linuxbrew']`,
@@ -331,68 +179,41 @@ g:doxygen_project_root_finder
                         behaviour by calling
                         `doxygen#default_get_project_root`.
 
-                                                *doxygen_generate_on_missing*
-g:doxygen_generate_on_missing
-                        If set to 1, doxygen will start generating an initial
-                        tag file if a file is open in a project where no tags
-                        file is found. See |doxygen_project_root| for how
-                        doxygen locates the project.
-                        When set to 0, doxygen will only generate the first
-                        time the file is saved (if
-                        |doxygen_generate_on_write| is set to 1), or when
-                        |doxygenUpdate| or |doxygenGenerate| is run.
-                        Defaults to 1.
-
                                                 *doxygen_generate_on_new*
 g:doxygen_generate_on_new
-                        If set to 1, doxygen will start generating the tag
-                        file when a new project is open. A new project is
+                        If set to 1, doxygen will start generating the docs
+                        when a new project is open. A new project is
                         considered open when a buffer is created for a file
-                        whose corresponding tag file has not been "seen" yet
+                        that has not been "seen" yet
                         in the current Vim session -- which pretty much means
                         when you open the first file in a given source control
                         repository.
                         When set to 0, doxygen won't do anything special.
-                        See also |doxygen_generate_on_missing| and
-                        |doxygen_generate_on_write|.
+
                         Defaults to 1.
 
                                                 *doxygen_generate_on_write*
 g:doxygen_generate_on_write
-                        If set to 1, doxygen will update the current
-                        project's tag file when a file inside that project is
+                        If set to 1, doxygen will (re)generate Doxygen
+                        documentation when a file inside that project is
                         saved. See |doxygen_project_root| for how doxygen
                         locates the project.
                         When set to 0, doxygen won't do anything on save.
-                        This means that the project's tag file won't reflect
+                        This means that the docs won't reflect
                         the latest changes, and you will have to run
-                        |doxygenUpdate| manually.
+                        |DoxygenUpdate| manually.
                         Defaults to 1.
 
                                             *doxygen_generate_on_empty_buffer*
 g:doxygen_generate_on_empty_buffer
-                        If set to 1, doxygen will start generating the tag
-                        file even if there's no buffer currently open, as long
-                        as the current working directory (as returned by
+                        If set to 1, doxygen will start generating the Doxygen
+                        documentation even if there's no buffer currently open,
+                        as long as the current working directory (as returned by
                         |:cd|) is inside a known project.
                         This is useful if you want doxygen to generate the
-                        tag file right after opening Vim.
+                        docs right after opening Vim.
+
                         Defaults to 0.
-
-                                                *doxygen_background_update*
-g:doxygen_background_update
-                        Specifies whether the process that updates the tags
-                        file should be run in the background or in the
-                        foreground. If run in the foreground, Vim will block
-                        until the process is complete.
-                        Defaults to 1.
-
-                                                *doxygen_cache_dir*
-g:doxygen_cache_dir
-                        Specifies a directory in which to create all the tags
-                        files, instead of writing them at the root of each
-                        project. This is handy to keep tags files from
-                        polluting many directories all across your computer.
 
                                             *doxygen_resolve_symlinks*
 g:doxygen_resolve_symlinks
@@ -416,270 +237,21 @@ g:doxygen_init_user_func
                         You can use this to manually set buffer-local
                         settings:
 
-                        * `b:doxygen_ctags_tagfile` (see |doxygen_ctags_tagfile|).
-
-                        This setting was previously called
-                        `doxygen_enabled_user_func`. The old setting is
-                        still used as a fallback.
-
                         Defaults to "".
 
                                             *doxygen_define_advanced_commands*
 g:doxygen_define_advanced_commands
                         Defines some advanced commands like
-                        |doxygenToggleEnabled| and |doxygenUnlock|.
-
-                                            *doxygen_project_info*
-g:doxygen_project_info
-                        Defines ways for doxygen to figure out what kind of
-                        project any given file belongs to. This should be
-                        a list of dictionaries:
-
-                        let g:doxygen_project_info = []
-                        call add(g:doxygen_project_info, {...})
-
-                        Each dictionary item must contain at least a `type`
-                        key, indicating the type of project:
-
-                        {"type": "python"}
-
-                        Other items will be used to figure out if a project is
-                        of the given type.
-
-                        "file": any existing file with this path (relative to
-                        the project root) will make the current project match
-                        the given info.
-
-                        "glob": any result found with this glob pattern
-                        (relative to the project root) will make the current
-                        project match the given info. See |glob()| for more
-                        information.
-
-                        doxygen adds by default the following definitions:
-
-                        call add(g:doxygen_project_info, {'type': 'python', 'file': 'setup.py'})
-                        call add(g:doxygen_project_info, {'type': 'ruby', 'file': 'Gemfile'})
-
-                        This means, for example, that you can use
-                        `g:doxygen_ctags_executable_ruby` out of the box.
-                        See |doxygen_ctags_executable_{filetype}| for more
-                        information.
-
-                                            *doxygen_file_list_command*
-g:doxygen_file_list_command
-                        Specifies command(s) to use to list files for which
-                        tags should be generated, instead of recursively
-                        examining all files within the project root. When
-                        invoked, file list commands will execute in the
-                        project root directory.
-
-                        This setting is useful in projects using source
-                        control to restrict tag generation to only files
-                        tracked in the repository.
-
-                        This variable may be set in one of two ways. If
-                        set as a |String|, the specified command will be used to
-                        list files for all projects. For example: >
-
-                         let g:doxygen_file_list_command = 'find . -type f'
-<
-                        If set as a |Dictionary|, this variable should be set
-                        as a mapping of project root markers to the desired
-                        file list command for that root marker. (See
-                        |doxygen_project_root| for how doxygen uses root
-                        markers to locate the project.) For example: >
-
-                         let g:doxygen_file_list_command = {
-                             \ 'markers': {
-                                 \ '.git': 'git ls-files',
-                                 \ '.hg': 'hg files',
-                                 \ },
-                             \ }
-<
-                        Note: If a custom ctags executable is specified, it
-                        must support the '-L' command line option in order to
-                        read the list of files to be examined.
-
-
-The following settings are valid for the `ctags` module.
-
-                                                *doxygen_ctags_executable*
-g:doxygen_ctags_executable
-                        Specifies the ctags executable to launch.
-                        Defaults to `ctags`.
-
-                                     *doxygen_ctags_executable_{filetype}*
-g:doxygen_ctags_executable_{type}
-                        Specifies the ctags executable to launch for a project
-                        of type {type}. See |doxygen_project_info| for more
-                        information.
-                        IMPORTANT: please see |doxygen-ctags-requirements|.
-                        Example: >
-                         let g:doxygen_ctags_executable_ruby = 'ripper-tags'
-<
-
-                                                *doxygen_ctags_tagfile*
-g:doxygen_ctags_tagfile
-                        Specifies the name of the tag file to create. This
-                        will be appended to the project's root. See
-                        |doxygen_project_root| for how doxygen locates the
-                        project.
-                        Defaults to `tags`.
-
-                                                *doxygen_ctags_exclude*
-g:doxygen_ctags_exclude
-                        A list of file patterns to pass to the
-                        |doxygen_ctags_executable| so that they will be
-                        excluded from parsing for the tags generation.
-                        See also |doxygen_ctags_exclude_wildignore|.
-                        Defaults to `[]` (an empty |List|).
-
-                                                *doxygen_ctags_exclude_wildignore*
-g:doxygen_ctags_exclude_wildignore
-                        When 1, doxygen will automatically pass your
-                        'wildignore' file patterns to the
-                        |doxygen_ctags_executable| so that they are ignored.
-                        Set also |doxygen_ctags_exclude| to pass custom
-                        patterns.
-                        Defaults to 1.
-
-                                                *doxygen_ctags_auto_set_tags*
-g:doxygen_ctags_auto_set_tags
-                        If set to 1, doxygen will automatically prepend
-                        'tags' with the exact path to the tag file for the
-                        current project. See |doxygen_project_root| for how
-                        doxygen locates the project.
-                        When set to 0, doxygen doesn't change 'tags', and
-                        this means that whatever tag file it generates may
-                        not be picked up by Vim. See |tagfiles()| to know what
-                        tag files Vim knows about.
-                        Defaults to 1.
-
-                                                *doxygen_ctags_extra_args*
-g:doxygen_ctags_extra_args
-                        A list of arguments to pass to `ctags`.
-                        Defaults to `[]`.
-
-                                                *doxygen_ctags_post_process_cmd*
-g:doxygen_ctags_post_process_cmd
-                        If defined, the tags generation script will run the
-                        command with an argument that points to a temporary
-                        copy of the tags file. If the post-process step is
-                        modifying the tags file, it needs to do so in-place.
-                        This is useful for cleaning up a tags file that may
-                        contain tags with non-ASCII names that somehow upsets
-                        Vim.
-                        Defaults to `""` (an empty |String|).
-
-
-The following settings are valid for the `cscope` module.
-
-                                                *doxygen_cscope_executable*
-g:doxygen_cscope_executable
-                        Specifies the name or path of the `cscope` executable
-                        to use to generate the code database.
-                        Defaults to `"cscope"`.
-
-                                                *doxygen_scopefile*
-g:doxygen_scopefile
-                        Specifies the name of the scope file to create. This
-                        will be appended to the project's root. See
-                        |doxygen_project_root| for how doxygen locates the
-                        project.
-                        Defaults to `"cscope.out"`.
-
-                                                *doxygen_auto_add_cscope*
-g:doxygen_auto_add_cscope
-                        If set to 1, doxygen will automatically add the
-                        generated code database to Vim by running `:cs add`
-                        (see |:cscope|).
-                        Defaults to 1.
-
-                                                *doxygen_cscope_build_inverted_index*
-g:doxygen_cscope_build_inverted_index
-                        If set to 1, doxygen will make `cscope` build an
-                        inverted index.
-                        Defaults to 0.
-
-
-The following settings are valid for the `pycscope` module.
-
-                                                *doxygen_pycscope_executable*
-g:doxygen_pycscope_executable
-                        Specifies the name or path of the `pycscope` executable
-                        to use to generate the code database.
-                        Defaults to `"pycscope"`.
-
-                                                *doxygen_auto_add_pycscope*
-g:doxygen_auto_add_pycscope
-                        If set to 1, doxygen will automatically add the
-                        generated code database to Vim by running `:cs add`
-                        (see |:pycscope|).
-                        Defaults to 1.
-
-
-The following settings are valid for the `gtags_cscope` module.
-
-                                                *doxygen_gtags_executable*
-g:doxygen_gtags_executable
-                        Specifies the name or path of the `gtags` executable
-                        to use to generate the code database.
-                        Defaults to `"gtags"`.
-
-                                                *doxygen_gtags_cscope_executable*
-g:doxygen_gtags_cscope_executable
-                        Specifies the name or path of the `gtags-cscope`
-                        executable to use to generate the code database.
-                        Defaults to `"gtags-cscope"`.
-
-                                                *doxygen_gtags_dbpath*
-g:doxygen_gtags_dbpath
-                        Path from the cache directory (|doxygen_cache_dir|
-                        or project root) to the folder containing the
-                        definition database file (usually called `GTAGS`).
-                        Defaults to `""`.
-
-                                                *doxygen_gtags_options_file*
-g:doxygen_gtags_options_file
-                        The name of a file that will be looked for in
-                        a project root directory. The file is expected to
-                        contain `gtags` options (one per line).
-                        Defaults to `".gutgtags"`.
-
-                                                *doxygen_auto_add_gtags_cscope*
-g:doxygen_auto_add_gtags_cscope
-                        If set to 1, doxygen will automatically add the
-                        generated code database to Vim by running `:cs add`
-                        (see |:cscope|).
-                        Defaults to 1.
-
-
-People using `cscope`, `pycscope` or `gtags_cscope` across multiple projects in the same
-Vim instance might be interested in the `doxygen_plus` plugin, which handles
-switching databases automatically before performing a query.
-See https://github.com/skywind3000/doxygen_plus.
+                        |DoxygenToggleEnabled|.
 
 =============================================================================
-5. Project Settings                             *doxygen-project-settings*
+4. Project Settings                             *doxygen-project-settings*
 
 doxygen can be customized to some extent on a per-project basis with the
 following files present in the project root directory:
 
-                                                *doxygen-.gutctags*
-`.gutctags`: if this file exists, Ctags will be told to load additional
-command-line parameters by reading it line by line (see the Ctags
-documentation for more information).
-
-Note that for complex reasons, doxygen can't run `ctags` from the project
-root if you're using |doxygen_cache_dir|, so if the `.gutctags` file exists,
-it will be pre-processed in order to make all `--exclude=` clauses into
-absolute paths (by prepending the project root). The resulting file will be
-saved into the cache directory, and passed to `ctags` via the `--options=`
-parameter. If you're _not_ using |doxygen_cache_dir|, the `.gutctags` file
-is _not_ pre-processed, and is passed as-is via the `--options=` parameter.
-
-                                                *doxygen-.notags*
-`.notags`: if this file exists, doxygen will be disabled completely for that
+                                                *doxygen-.nodoxygen*
+`.nodoxygen`: if this file exists, doxygen will be disabled completely for that
 project.
 
 
