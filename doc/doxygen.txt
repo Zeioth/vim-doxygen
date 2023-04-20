@@ -250,6 +250,12 @@ g:doxygen_auto_setup
                         into the project's root directory. Specifically, on the
                         subdirectory defined on |doxygen_clone_destiny_dir|.
 
+                        Please, note that even though |doxygen_auto_setup|
+                        will setup doxygen for you, you are still responsable
+                        for adding your doxygen directory to the .gitignore
+                        in case you don't want it to be pushed to git by
+                        accident.
+
                         Defaults to 1.
 
                                             *doxygen_clone_config_repo*
