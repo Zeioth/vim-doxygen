@@ -65,10 +65,11 @@ let g:doxygen_define_advanced_commands = get(g:, 'doxygen_define_advanced_comman
 " Globals - The important stuff {{{
 
 let g:doxygen_auto_setup = get(g:, 'doxygen_auto_setup', 1)
-let g:doxygen_clone_config_repo = get(g:, 'doxygen_clone_config_repo', 'https://github.com/Zeioth/doxygenvim-template.git')
 
+let g:doxygen_clone_config_repo = get(g:, 'doxygen_clone_config_repo', 'https://github.com/Zeioth/vim-doxygen-template.git')
 let g:doxygen_clone_cmd = get(g:, 'doxygen_clone_cmd', 'git clone')
 let g:doxygen_clone_destiny_dir = get(g:, 'doxygen_clone_destiny_dir', './.project-documentation')
+let g:doxygen_clone_post_cmd = get(g:, 'doxygen_clone_post_cmd', '&& rm -r ' . g:doxygen_clone_destiny_dir . '/.git')
 
 " Doxygen - Auto regen
 let g:doxygen_auto_regen = get(g:, 'doxygen_auto_regen', 1)

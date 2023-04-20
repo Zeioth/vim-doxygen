@@ -286,6 +286,16 @@ g:doxygen_clone_destiny_dir
 
                         Defaults to "./.project-documentation".
 
+                                            *doxygen_clone_post_cmd*
+g:doxygen_clone_post_cmd
+                        Command to execute after the config repository is
+                        cloned. By default we just want to delete the .git
+                        directory after cloning, but this command is
+                        customizable.
+
+                        Defaults to:
+                        '&& rm -r ' . g:doxygen_clone_destiny_dir . '/.git'
+
                                             *doxygen_auto_regen*
 g:doxygen_auto_regen
                         When setted to 1, doxygen will automatically generate
