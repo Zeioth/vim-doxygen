@@ -1,4 +1,4 @@
-# vim-doxygen - (WIP, please be patient)
+# vim-doxygen - (Currently functional, but under heavy development)
 Your doxygen documentation on vim. 
 
 ## Documentation
