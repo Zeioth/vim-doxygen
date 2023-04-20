@@ -68,7 +68,7 @@ This project started as a hack of [vim-guttentags](https://github.com/ludoviccha
 * The bootstrap version seems outdated. We should distribute a default doxyfile for now.
 
 ## Improvements
-* If the user tries to open the doxigen web and it has not been generated yet, echo an error.
+* If the user tries to open the doxigen docs and they have not been generated yet, throw an error.
 * Offer a way to use a local doxyfile.
 * Use the helpers to make sure all directories defined by default work on all operative systems.
 
