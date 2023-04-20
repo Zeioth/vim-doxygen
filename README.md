@@ -63,7 +63,6 @@ This project started as a hack of [vim-guttentags](https://github.com/ludoviccha
 * Record a cool video.
 
 ## Minor bugs 
-* After cloning, we should delete the .git directory and similar, to avoid potential problems.
 * The bootstrap version seems outdated. We should distribute a default doxyfile for now.
 
 ## Improvements
