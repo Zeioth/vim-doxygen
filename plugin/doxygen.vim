@@ -78,7 +78,7 @@ let g:doxygen_cmd = get(g:, 'doxygen_cmd', 'cd ./.project-documentation/doxygen-
 let g:doxygen_browser_cmd = get(g:, 'doxygen_browser_cmd', 'xdg-open')
 let g:doxygen_browser_file = get(g:, 'doxygen_browser_file', '/.project-documentation/html/index.html')
 
-" Doxygen - KB Shortcuts - 
+" Doxygen - Keyboard | Keybindings | kb
 " (recomended: <C-h> and <C-k>)
 let g:doxygen_shortcut_regen = get(g:, 'doxygen_shortcut_regen', '')
 let g:doxygen_shortcut_open = get(g:, 'doxygen_shortcut_open', '')

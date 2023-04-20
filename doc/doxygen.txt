@@ -244,6 +244,116 @@ g:doxygen_define_advanced_commands
                         Defines some advanced commands like
                         |DoxygenToggleEnabled|.
 
+                                            *doxygen_auto_setup*
+g:doxygen_auto_setup
+                        When set to 1, it will clone |doxygen_clone_config_repo|
+                        into the project's root directory. Specifically, on the
+                        subdirectory defined on |doxygen_clone_destiny_dir|.
+
+                        Defaults to 1.
+
+                                            *doxygen_clone_config_repo*
+g:doxygen_clone_config_repo
+                        When using this plugin, Doxyfiles are never generated
+                        locally. Instead they are downloaded from a
+                        repository. This way makes easy to use
+                        customized doxyfiles.
+
+                        The default repository is meant for testing purposes
+                        only and it is strongly encouraged for users to fork
+                        and customize. This improves security too.
+
+                        Defaults to "https://github.com/Zeioth/doxygenvim-template.git".
+
+
+                                            *doxygen_clone_cmd*
+g:doxygen_clone_cmd
+                        This global variable can be handy for users who prefer
+                        not using git.
+
+                        Defaults to "git clone".
+
+                                            *doxygen_clone_destiny_dir*
+g:doxygen_clone_destiny_dir
+                        Where to clone the doxyfile directory from the
+                        projec's root directory.
+
+                        Defaults to "./.project-documentation".
+
+                                            *doxygen_auto_regen*
+g:doxygen_auto_regen
+                        When setted to 1, doxygen will automatically generate
+                        the documentation for you.
+
+                        If you prefer to generate the docs manually, you can
+                        use the command |DoxygenRegen|, or
+                        |doxygen_shortcut_regen|. In this case you might want
+                        to set this this global to 0.
+
+                        Defaults to 1.
+
+                                            *doxygen_cmd*
+g:doxygen_cmd
+                        This is the command that Doxygen uses to generate the
+                        project documentation.
+
+                        Be careful if you change it:
+                        By general rule, it is important to
+                        cd to the directory where the doxyfile lives.
+
+                        This is because the paths defined in the doxyfile are
+                        relative to the directory where the doxygen command is
+                        executed from.
+
+                        Please, take the default value of this global as reference.
+
+                        Defaults to "cd ./.project-documentation/doxygen-conf/ && doxygen ./doxyfile.dox".
+
+
+                                            *doxygen_browser_cmd*
+g:doxygen_browser_cmd
+                        It is the program that will be used to open
+                        |doxygen_browser_file|.
+
+                        This can be your internet browser, or anything else,
+                        really.
+
+                        Defaults to "xdg-open".
+
+                                            *doxygen_browser_file*
+g:doxygen_browser_file
+                        The file that will be opened by the command
+                        |DoxygenOpen| or the keybinding defined in
+                        |doxygen_shortcut_open|.
+
+                        Defaults to "/.project-documentation/html/index.html".
+
+                                            *doxygen_shortcut_regen*
+g:doxygen_shortcut_regen
+                        Customizable keybinding / kb / shortcut to manually
+                        regen Doxygen documentation.
+
+                        We let users to define keybindings, to avoid
+                        colisions.
+
+                        Defaults to "".
+
+
+                                            *doxygen_shortcut_open*
+g:doxygen_shortcut_open
+                        Customizable keybinding / kb / shortcut to open
+                        the documentation.
+
+                        To configure what this keybinding does, check
+                        |doxygen_browser_cmd| and |doxygen_browser_file|.
+
+                        We let users to define keybindings, to avoid
+                        colisions.
+
+                        Defaults to "".
+
+
+
 =============================================================================
 4. Project Settings                             *doxygen-project-settings*
 
