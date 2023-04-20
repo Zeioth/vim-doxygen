@@ -44,7 +44,7 @@ Change the way the root of the project is detected (optional)
 
 ``` 
 " By default, we detect the root of the project where the first .git file is found
-g:doxygen_project_root=".git"
+g:doxygen_project_root = ['.git', '.hg', '.svn', '.bzr', '_darcs', '_FOSSIL_', '.fslckout']
 ```
 
 ## Final notes
