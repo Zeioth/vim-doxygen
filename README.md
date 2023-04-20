@@ -14,7 +14,7 @@ g:doxygen_auto_setup = 0
 
 " OPTIONAL: You can provide a custom doxyfile.
 let g:doxygen_clone_config_repo = 'https://github.com/Zeioth/doxygenvim-template.git'
-let g:doxygen_clone_destiny_dir = ''
+let g:doxygen_clone_destiny_dir = './.project-documentation'
 let g:doxygen_clone_cmd = 'git clone'
 
 " Shortcuts to open and generate docs (DISALED BY DEFAULT)
@@ -36,8 +36,8 @@ g:doxygen_auto_regen = 1
 Specify a custom command to generate the doxygen documentation (optional)
 
 ```
-" By default: 'cd ./.project-documentation/doxygen-conf/ && doxygen ./doxyfile.dox'
-g:doxygen_cmd = "doxygen -g <config-file>"
+" Go to a directory and run doxygen'
+g:doxygen_cmd = 'cd ./.project-documentation/doxygen-conf/ && doxygen ./doxyfile.dox'
 ```
 
 Change the way the root of the project is detected (optional)
@@ -55,11 +55,16 @@ This project is a hack of [vim-guttentags](https://github.com/ludovicchabant/vim
 
 ## TODOS
 
-* Feature: Command to generate docs manually.
-* Feature: Command to open the docs on the browser.
 * Clear boilerplate we don't need.
+* Record a cool video.
 
 ## Bugs 
 * On clone, we must delete the .git directory and similar, to avoid problems.
 * The bootstrap version seems outdated. We should distribute a default doxyfile.
 * Clone only if the directory doesn't exist already.
+
+## Improvements
+* If the user tries to open the doxigen web and it has not been generated yet, echo an error.
+
+## Help needed
+* Windows support: It should be functional, but if it isn't, please consider submitting a PR so everyone can benefit.
