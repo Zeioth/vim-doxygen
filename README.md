@@ -54,7 +54,7 @@ Create .nodoxygen in the project root.
 
 
 ## Credits
-This project is a hack of [vim-guttentags](https://github.com/ludovicchabant/vim-gutentags). We take most base functions from that project so please support the the author.
+This project started as a hack of [vim-guttentags](https://github.com/ludovicchabant/vim-gutentags). We use its boiler plate functions to manage directories in vimscript with good compatibility across operative systems. So please support its author too if you can!
 
 
 ## TODOS
