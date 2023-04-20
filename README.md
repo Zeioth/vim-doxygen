@@ -1,5 +1,5 @@
-# vim-doxygen - (WIP, please be patient)
-Your doxygen documentation on vim. 
+# vim-doxygen
+Your doxygen documentation on vim. (This project is functional already, but under heavy development. If you find some bug, please submit an issue or PR and I will look into it.
 
 ## Documentation
 Please use <:h doxygen> on vim to read the full documentation.
@@ -49,19 +49,23 @@ g:doxygen_project_root=".git"
    
 **IMPORTANT**: Please, note that even though g:doxygen_auto_setup will setup doxygen for you, you are still responsable for adding your doxygen directory to the .gitignore if you don't want it to be pushed by accident.
 
+## HOW TO: Disable the plugin for an specific project
+Create .nodoxygen in the project root.
+
+
 ## Credits
-This project is a hack of [vim-guttentags](https://github.com/ludovicchabant/vim-gutentags). We take most base functions from that project so please support the the author.
+This project started as a hack of [vim-guttentags](https://github.com/ludovicchabant/vim-gutentags). We use its boiler plate functions to manage directories in vimscript with good compatibility across operative systems. So please support its author too if you can!
 
 
 ## TODOS
 
-* Clear boilerplate we don't need.
 * Record a cool video.
 
 ## Bugs 
-* On clone, we must delete the .git directory and similar, to avoid problems.
-* The bootstrap version seems outdated. We should distribute a default doxyfile.
-* Clone only if the directory doesn't exist already.
+* Clone only if the destiny directory doesn't exist already. This will save useless requests to github.
+* After cloning, we should delete the .git directory and similar, to avoid problems.
+* The bootstrap version seems outdated. We should distribute a default doxyfile for now.
+
 
 ## Improvements
 * If the user tries to open the doxigen web and it has not been generated yet, echo an error.
