@@ -33,7 +33,7 @@ let g:doxygen_fake = get(g:, 'doxygen_fake', 0)
 let g:doxygen_background_update = get(g:, 'doxygen_background_update', 1)
 let g:doxygen_pause_after_update = get(g:, 'doxygen_pause_after_update', 0)
 let g:doxygen_enabled = get(g:, 'doxygen_enabled', 1)
-let g:doxygen_modules = get(g:, 'doxygen_modules', ['ctags'])
+"let g:doxygen_modules = get(g:, 'doxygen_modules', ['ctags'])
 
 let g:doxygen_init_user_func = get(g:, 'doxygen_init_user_func', 
             \get(g:, 'doxygen_enabled_user_func', ''))
@@ -90,6 +90,24 @@ else
 endif
 
 let g:__doxygen_vim_is_leaving = 0
+
+" DOXIGEN GLOBALS
+let g:doxygen_auto_setup = 1
+let g:doxygen_clone_config_repo = 'https://github.com/Zeioth/doxygenvim-template.git'
+let g:doxygen_clone_cmd = 'git clone'
+let g:doxygen_clone_destiny_dir = './.project-documentation'
+
+" Doxygen - Autoregen
+let g:doxygen_auto_regen = 1
+let g:doxygen_cmd = 'cd ./.project-documentation/doxygen-conf/ && doxygen ./doxyfile.dox'
+
+" Doxygen - Open on browser
+let g:doxygen_browser_cmd = 'xdg-open'
+let g:doxygen_browser_file = '/.project-documentation/html/index.html'
+
+" Doxygen - KB Shortcuts → let's not define them by default
+"let g:doxygen_shortcut_regen = '<C-h>'
+"let g:doxygen_shortcut_open = '<C-k>'
 
 " }}}
 

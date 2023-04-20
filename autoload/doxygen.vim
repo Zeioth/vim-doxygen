@@ -287,8 +287,8 @@ function! doxygen#setup_doxygen() abort
             call doxygen#trace("no valid project root.. no doxygen support.")
             return
         endif
-        if filereadable(b:doxygen_root . '/.notags')
-            call doxygen#trace("'.notags' file found... no doxygen support.")
+        if filereadable(b:doxygen_root . '/.nodoxigen')
+            call doxygen#trace("'.nodoxigen' file found... no doxygen support.")
             return
         endif
 
@@ -305,9 +305,9 @@ function! doxygen#setup_doxygen() abort
         endif
 
         let b:doxygen_files = {}
-        for module in g:doxygen_modules
-            call call("doxygen#".module."#init", [b:doxygen_root])
-        endfor
+        " for module in g:doxygen_modules
+        "     call call("doxygen#".module."#init", [b:doxygen_root])
+        " endfor
     catch /^doxygen\:/
         call doxygen#trace("No doxygen support for this buffer.")
         return
@@ -367,112 +367,17 @@ function! doxygen#on_vim_leave() abort
         " Vim8 doesn't seem to be killing child processes soon enough for
         " us to clean things up inside this plugin, so do it ourselves.
         " TODO: test other platforms and other vims
-        for module in g:doxygen_modules
-            for upd_info in s:update_in_progress[module]
-                let l:job = upd_info[1]
-                call job_stop(l:job, "term")
-                let l:status = job_status(l:job)
-                if l:status == "run"
-                    call job_stop(l:job, "kill")
-                endif
-            endfor
-        endfor
+        " for module in g:doxygen_modules
+        "     for upd_info in s:update_in_progress[module]
+        "         let l:job = upd_info[1]
+        "         call job_stop(l:job, "term")
+        "         let l:status = job_status(l:job)
+        "         if l:status == "run"
+        "             call job_stop(l:job, "kill")
+        "         endif
+        "     endfor
+        " endfor
     endif
-endfunction
-
-" }}}
-
-"  Job Management {{{
-
-" List of queued-up jobs, and in-progress jobs, per module.
-let s:update_queue = {}
-let s:update_in_progress = {}
-for module in g:doxygen_modules
-    let s:update_queue[module] = []
-    let s:update_in_progress[module] = []
-endfor
-
-" Adds a started job to the list of ongoing updates.
-" Must pass the tags file being created/updated, and the job data as
-" returned by the doxygen#start_job function
-function! doxygen#add_job(module, tags_file, data) abort
-    call add(s:update_in_progress[a:module], [a:tags_file, a:data])
-endfunction
-
-" Finds an ongoing job by tags file
-function! doxygen#find_job_index_by_tags_file(module, tags_file) abort
-    let l:idx = -1
-    for upd_info in s:update_in_progress[a:module]
-        let l:idx += 1
-        if upd_info[0] == a:tags_file
-            return l:idx
-        endif
-    endfor
-    return -1
-endfunction
-
-" Finds an ongoing job by job data
-function! doxygen#find_job_index_by_data(module, data) abort
-    let l:idx = -1
-    for upd_info in s:update_in_progress[a:module]
-        let l:idx += 1
-        if upd_info[1] == a:data
-            return l:idx
-        endif
-    endfor
-    return -1
-endfunction
-
-" Gets the tags file of a given job
-function! doxygen#get_job_tags_file(module, job_idx) abort
-    return s:update_in_progress[a:module][a:job_idx][0]
-endfunction
-
-" Gets the job data of the i-th job
-function! doxygen#get_job_data(module, job_idx) abort
-    return s:update_in_progress[a:module][a:job_idx][1]
-endfunction
-
-" Removes the i-th job from the ongoing jobs
-function! doxygen#remove_job(module, job_idx) abort
-    let [l:tags_file, l:job_data] = s:update_in_progress[a:module][a:job_idx]
-    call remove(s:update_in_progress[a:module], a:job_idx)
-
-    " Run the user callback for finished jobs.
-    silent doautocmd User doxygenUpdated
-
-    " See if we had any more updates queued up for this.
-    let l:qu_idx = -1
-    for qu_info in s:update_queue[a:module]
-        let l:qu_idx += 1
-        if qu_info[0] == l:tags_file
-            break
-        endif
-    endfor
-    if l:qu_idx >= 0
-        let l:qu_info = s:update_queue[a:module][l:qu_idx]
-        call remove(s:update_queue[a:module], l:qu_idx)
-
-        if bufexists(l:qu_info[1])
-            call doxygen#trace("Finished ".a:module." job, ".
-                        \"running queued update for '".l:tags_file."'.")
-            call s:update_doxyfile(l:qu_info[1], a:module, l:qu_info[2], 2)
-        else
-            call doxygen#trace("Finished ".a:module." job, ".
-                        \"but skipping queued update for '".l:tags_file."' ".
-                        \"because originating buffer doesn't exist anymore.")
-        endif
-    else
-        call doxygen#trace("Finished ".a:module." job.")
-    endif
-
-    return [l:tags_file, l:job_data]
-endfunction
-
-" Removes the job from the ongoing jobs given its job data
-function! doxygen#remove_job_by_data(module, data) abort
-    let l:idx = doxygen#find_job_index_by_data(a:module, a:data)
-    return doxygen#remove_job(a:module, l:idx)
 endfunction
 
 " }}}
@@ -515,9 +420,7 @@ endfunction
 " (re)generate the tags file for a buffer that just go saved.
 function! s:write_triggered_update_doxyfile(bufno) abort
     if g:doxygen_enabled && g:doxygen_generate_on_write
-        for module in g:doxygen_modules
-            call s:update_doxyfile(a:bufno, module, 0, 2)
-        endfor
+      call s:update_doxyfile(a:bufno, 0, 2)
     endif
     silent doautocmd user doxygenupdating
 endfunction
@@ -531,43 +434,10 @@ endfunction
 "   0: if an update is already in progress, report it and abort.
 "   1: if an update is already in progress, abort silently.
 "   2: if an update is already in progress, queue another one.
-function! s:update_doxyfile(bufno, module, write_mode, queue_mode) abort
+function! s:update_doxyfile(bufno, write_mode, queue_mode) abort
     " figure out where to save.
     let l:buf_doxygen_files = getbufvar(a:bufno, 'doxygen_files')
-    let l:tags_file = l:buf_doxygen_files[a:module]
     let l:proj_dir = getbufvar(a:bufno, 'doxygen_root')
-
-    " check that there's not already an update in progress.
-    let l:in_progress_idx = doxygen#find_job_index_by_tags_file(
-                \a:module, l:tags_file)
-    if l:in_progress_idx >= 0
-        if a:queue_mode == 2
-            let l:needs_queuing = 1
-            for qu_info in s:update_queue[a:module]
-                if qu_info[0] == l:tags_file
-                    let l:needs_queuing = 0
-                    break
-                endif
-            endfor
-            if l:needs_queuing
-                call add(s:update_queue[a:module], 
-                            \[l:tags_file, a:bufno, a:write_mode])
-            endif
-            call doxygen#trace("Tag file '" . l:tags_file . 
-                        \"' is already being updated. Queuing it up...")
-        elseif a:queue_mode == 1
-            call doxygen#trace("Tag file '" . l:tags_file .
-                        \"' is already being updated. Skipping...")
-        elseif a:queue_mode == 0
-            echom "doxygen: The tags file is already being updated, " .
-                        \"please try again later."
-        else
-            call doxygen#throw("Unknown queue mode: " . a:queue_mode)
-        endif
-
-        " Don't update the tags right now.
-        return
-    endif
 
     " Switch to the project root to make the command line smaller, and make
     " it possible to get the relative path of the filename.
@@ -595,124 +465,6 @@ function! s:update_doxyfile(bufno, module, write_mode, queue_mode) abort
         " Restore the current directory...
         call doxygen#chdir(l:prev_cwd)
     endtry
-endfunction
-
-" }}}
-
-" Utility Functions {{{
-
-function! doxygen#rescan(...)
-    if exists('b:doxygen_files')
-        unlet b:doxygen_files
-    endif
-    if a:0 && a:1
-        let l:trace_backup = g:doxygen_trace
-        let l:doxygen_trace = 1
-    endif
-    call doxygen#setup_doxygen()
-    if a:0 && a:1
-        let g:doxygen_trace = l:trace_backup
-    endif
-endfunction
-
-function! doxygen#toggletrace(...)
-    let g:doxygen_trace = !g:doxygen_trace
-    if a:0 > 0
-        let g:doxygen_trace = a:1
-    endif
-    if g:doxygen_trace
-        echom "doxygen: Tracing is enabled."
-    else
-        echom "doxygen: Tracing is disabled."
-    endif
-    echom ""
-endfunction
-
-function! doxygen#fake(...)
-    let g:doxygen_fake = !g:doxygen_fake
-    if a:0 > 0
-        let g:doxygen_fake = a:1
-    endif
-    if g:doxygen_fake
-        echom "doxygen: Now faking doxygen."
-    else
-        echom "doxygen: Now running doxygen for real."
-    endif
-    echom ""
-endfunction
-
-function! doxygen#default_stdout_cb(chan, msg) abort
-    call doxygen#trace('[job stdout]: '.string(a:msg))
-endfunction
-
-function! doxygen#default_stderr_cb(chan, msg) abort
-    call doxygen#trace('[job stderr]: '.string(a:msg))
-endfunction
-
-if has('nvim')
-    " Neovim job API.
-    function! s:nvim_job_exit_wrapper(real_cb, job, exit_code, event_type) abort
-        call call(a:real_cb, [a:job, a:exit_code])
-    endfunction
-
-    function! s:nvim_job_out_wrapper(real_cb, job, lines, event_type) abort
-        call call(a:real_cb, [a:job, a:lines])
-    endfunction
-
-    function! doxygen#build_default_job_options(module) abort
-       " Neovim kills jobs on exit, which is what we want.
-       let l:job_opts = {
-                \'on_exit': function(
-                \    '<SID>nvim_job_exit_wrapper',
-                \    ['doxygen#'.a:module.'#on_job_exit']),
-                \'on_stdout': function(
-                \    '<SID>nvim_job_out_wrapper',
-                \    ['doxygen#default_stdout_cb']),
-                \'on_stderr': function(
-                \    '<SID>nvim_job_out_wrapper',
-                \    ['doxygen#default_stderr_cb'])
-                \}
-       return l:job_opts
-    endfunction
-
-    function! doxygen#start_job(cmd, opts) abort
-        return jobstart(a:cmd, a:opts)
-    endfunction
-else
-    " Vim8 job API.
-    function! doxygen#build_default_job_options(module) abort
-        let l:job_opts = {
-                 \'exit_cb': 'doxygen#'.a:module.'#on_job_exit',
-                 \'out_cb': 'doxygen#default_stdout_cb',
-                 \'err_cb': 'doxygen#default_stderr_cb',
-                 \'stoponexit': 'term'
-                 \}
-        return l:job_opts
-    endfunction
-
-    function! doxygen#start_job(cmd, opts) abort
-        return job_start(a:cmd, a:opts)
-    endfunction
-endif
-
-" Returns which modules are currently generating something for the
-" current buffer.
-function! doxygen#inprogress()
-    " Does this buffer have doxygen enabled?
-    if !exists('b:doxygen_files')
-        return []
-    endif
-
-    " Find any module that has a job in progress for any of this buffer's
-    " tags files.
-    let l:modules_in_progress = []
-    for [module, tags_file] in items(b:doxygen_files)
-        let l:jobidx = doxygen#find_job_index_by_tags_file(module, tags_file)
-        if l:jobidx >= 0
-            call add(l:modules_in_progress, module)
-        endif
-    endfor
-    return l:modules_in_progress
 endfunction
 
 " }}}
