@@ -62,9 +62,10 @@ This project started as a hack of [vim-guttentags](https://github.com/ludoviccha
 * Record a cool video.
 
 ## Bugs 
-* On clone, we must delete the .git directory and similar, to avoid problems.
-* The bootstrap version seems outdated. We should distribute a default doxyfile.
-* Clone only if the directory doesn't exist already.
+* Clone only if the destiny directory doesn't exist already. This will save useless requests to github.
+* After cloning, we should delete the .git directory and similar, to avoid problems.
+* The bootstrap version seems outdated. We should distribute a default doxyfile for now.
+
 
 ## Improvements
 * If the user tries to open the doxigen web and it has not been generated yet, echo an error.
