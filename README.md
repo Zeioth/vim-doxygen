@@ -1,5 +1,5 @@
-# vim-doxygen - (Currently functional, but under heavy development)
-Your doxygen documentation on vim. 
+# vim-doxygen
+Your doxygen documentation on vim. (This project is functional already, but under heavy development. If you find some bug, please submit an issue or PR and I will look into it.
 
 ## Documentation
 Please use <:h doxygen> on vim to read the full documentation.
