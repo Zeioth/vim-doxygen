@@ -53,19 +53,21 @@ Please, note that even though g:doxygen_auto_setup will setup doxygen for you, y
 
 It is also possible to disable this plugin for a single project. For that, create .nodoxygen file in the project root directory.
 
+## Cool features of this plugin
+
+* Automated doxygen setup for your project. → Creates the doxyfile locally, or from a repository.
+* Documentation is automatically generated as you work.
+* Shortcut to open the documentation in your browser
+* Shortcut to manually generate documentation (if you don't like the auto mode)
+* Easy to use doxygen themes
+
+## PRs that will be accepted (Help needed)
+
+* Windows support: It should be functional, but if it isn't, please consider submitting a PR so everyone can benefit from it. → Use the helpers to make sure all directories defined by default work on all operative systems.
+
+## PRs that will be ignored
+
+* Extreme border cases like "I want to have a different DoxyFile for each project". For those scenarios, please disable the automatic setup.
 
 ## Credits
 This project started as a hack of [vim-guttentags](https://github.com/ludovicchabant/vim-gutentags). We use its boiler plate functions to manage directories in vimscript with good compatibility across operative systems. So please support its author too if you can!
-
-
-## TODOS
-
-* Record a cool video.
-
-## Improvements
-* The bootstrap version seems outdated. We should distribute a default doxyfile for now.
-* Offer a way to use a local doxyfile.
-* Use the helpers to make sure all directories defined by default work on all operative systems.
-
-## Help needed
-* Windows support: It should be functional, but if it isn't, please consider submitting a PR so everyone can benefit.
