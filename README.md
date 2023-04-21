@@ -9,7 +9,15 @@ Please use <:h doxygen> on vim to read the [full documentation](https://github.c
 
 ## How to use
 
-Enable automated doxyfile generation
+You just need to define the next keybindings (you MUST setup this)
+
+```
+" Shortcuts to open and generate docs
+nmap <silent> <C-k> :<C-u>DoxygenRegen<CR>
+nmap <silent> <C-h> :<C-u>DoxygenOpen<CR>
+```
+
+Enable automated doxyfile generation (optional)
 
 ```
 " Clone a default Doxyfile into the project (ENABLED BY DEFAULT)
@@ -20,25 +28,20 @@ g:doxygen_auto_setup = 1
 let g:doxygen_clone_config_repo = 'https://github.com/Zeioth/doxygenvim-template.git'
 let g:doxygen_clone_destiny_dir = './doxygen'
 let g:doxygen_clone_cmd = 'git clone'
-
-" Shortcuts to open and generate docs (DISALED BY DEFAULT, YOU MUST DEFINE THEM)
-nmap <silent> <C-k> :<C-u>DoxygenRegen<CR>
-nmap <silent> <C-h> :<C-u>DoxygenOpen<CR>
-
-
-" You can configure how the docs are open when using g:doxygen_shortcut_open
-let g:doxygen_browser_cmd = 'xdg-open'
-let g:doxygen_browser_file = './doxygen/html/index.html'
 ```
 
-Enable automated doc generation on save
+Enable automated doc generation on save (optional)
 ```
 " By default, the docs can be accessed on "./doxygen/html/index.html".
 " This is defined in Doxyfile
 g:doxygen_auto_regen = 1
+
+" You can configure how the documentation is open.
+let g:doxygen_browser_cmd = 'xdg-open'
+let g:doxygen_browser_file = './doxygen/html/index.html'
 ```
 
-Specify a custom command to generate the doxygen documentation (optional)
+Custom command to generate the doxygen documentation (optional)
 
 ```
 " Go to a directory and run doxygen'
