@@ -1,6 +1,9 @@
 # vim-doxygen
 Out of the box, this plugin automatically creates a doxyfile for your project, and regenerates the Doxygen documentation on save. It also has keybindings to open the Doxygen documentation quickly when you are coding. All this behaviors can be customized. This project is functional already, but under heavy development. If you find some bug that is not listed below, please submit an issue or PR and I will look into it.
 
+## Video tutorial
+https://www.youtube.com/watch?v=rim6tW2ZXyg
+
 ## Documentation
 Please use <:h doxygen> on vim to read the [full documentation](https://github.com/Zeioth/vim-doxygen/blob/main/doc/doxygen.txt).
 
@@ -9,10 +12,11 @@ Please use <:h doxygen> on vim to read the [full documentation](https://github.c
 Enable automated doxyfile generation
 
 ```
-" Create a default doxigen config for the current project (ENABLED BY DEFAULT)
+" Clone a default Doxyfile into the project (ENABLED BY DEFAULT)
+" Check the template here: https://github.com/Zeioth/vim-doxygen-template
 g:doxygen_auto_setup = 1
 
-" OPTIONAL: You can provide a custom doxyfile.
+" OPTIONAL: You can provide a custom Doxyfile.
 let g:doxygen_clone_config_repo = 'https://github.com/Zeioth/doxygenvim-template.git'
 let g:doxygen_clone_destiny_dir = './doxygen'
 let g:doxygen_clone_cmd = 'git clone'
