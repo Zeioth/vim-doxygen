@@ -2,7 +2,7 @@
 Out of the box, this plugin automatically creates a doxyfile for your project, and regenerates the Doxygen documentation on save. It also has keybindings to open the Doxygen documentation quickly when you are coding. All this behaviors can be customized. This project is functional already, but under heavy development. If you find some bug that is not listed below, please submit an issue or PR and I will look into it.
 
 ## Documentation
-Please use <:h doxygen> on vim to read the full documentation.
+Please use <:h doxygen> on vim to read the [full documentation](https://github.com/Zeioth/vim-doxygen/blob/main/doc/doxygen.txt).
 
 ## How to use
 
@@ -14,7 +14,7 @@ g:doxygen_auto_setup = 1
 
 " OPTIONAL: You can provide a custom doxyfile.
 let g:doxygen_clone_config_repo = 'https://github.com/Zeioth/doxygenvim-template.git'
-let g:doxygen_clone_destiny_dir = './.project-documentation'
+let g:doxygen_clone_destiny_dir = './doxygen'
 let g:doxygen_clone_cmd = 'git clone'
 
 " Shortcuts to open and generate docs (DISALED BY DEFAULT)
@@ -23,12 +23,12 @@ let g:doxygen_shortcut_generate = '<C-h>'
 
 " You can configure how the docs are open when using g:doxygen_shortcut_open
 let g:doxygen_browser_cmd = 'xdg-open'
-let g:doxygen_browser_file = './.project-documentation/html/index.html'
+let g:doxygen_browser_file = './doxygen/html/index.html'
 ```
 
 Enable automated doc generation on save
 ```
-" By default, the docs can be accessed on "./.project-documentation/html/index.html".
+" By default, the docs can be accessed on "./doxygen/html/index.html".
 " This is defined in DoxyFile
 g:doxygen_auto_regen = 1
 ```
@@ -37,7 +37,7 @@ Specify a custom command to generate the doxygen documentation (optional)
 
 ```
 " Go to a directory and run doxygen'
-g:doxygen_cmd = 'cd ./.project-documentation/doxygen-conf/ && doxygen ./DoxyFile'
+g:doxygen_cmd = 'cd ./doxygen/ && doxygen ./DoxyFile'
 ```
 
 Change the way the root of the project is detected (optional)
