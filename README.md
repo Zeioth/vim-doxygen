@@ -7,8 +7,8 @@ Please use <:h doxygen> on vim to read the full documentation.
 ## How to use
 
 Enable automated doxyfile generation
-   
-``` 
+
+```
 " Create a default doxigen config for the current project (ENABLED BY DEFAULT)
 g:doxygen_auto_setup = 1
 
@@ -25,11 +25,11 @@ let g:doxygen_shortcut_generate = '<C-h>'
 let g:doxygen_browser_cmd = 'xdg-open'
 let g:doxygen_browser_file = './.project-documentation/html/index.html'
 ```
-   
+
 Enable automated doc generation on save
 ```
 " By default, the docs can be accessed on "./.project-documentation/html/index.html".
-" This is defined in doxyfile.dox
+" This is defined in DoxyFile
 g:doxygen_auto_regen = 1
 ```
 
@@ -37,12 +37,12 @@ Specify a custom command to generate the doxygen documentation (optional)
 
 ```
 " Go to a directory and run doxygen'
-g:doxygen_cmd = 'cd ./.project-documentation/doxygen-conf/ && doxygen ./doxyfile.dox'
+g:doxygen_cmd = 'cd ./.project-documentation/doxygen-conf/ && doxygen ./DoxyFile'
 ```
 
 Change the way the root of the project is detected (optional)
 
-``` 
+```
 " By default, we detect the root of the project where the first .git file is found
 g:doxygen_project_root = ['.git', '.hg', '.svn', '.bzr', '_darcs', '_FOSSIL_', '.fslckout']
 ```
