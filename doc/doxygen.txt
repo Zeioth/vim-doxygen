@@ -353,9 +353,27 @@ g:doxygen_browser_cmd
                                             *doxygen_browser_file*
 g:doxygen_browser_file
                         The file that will be opened by the command
-                        |DoxygenOpen|..
+                        |DoxygenOpen|.
 
                         Defaults to "/doxygen/html/index.html".
+
+                                            *doxygen_verbose_manual_regen*
+g:doxygen_verbose_manual_regen
+                        Display a message on the status bar when doxygen is
+                        manually regenerated using the command :|DoxygenRegen|.
+                        Normally, used through a keybinding.
+
+                        Defaults to "1".
+
+
+                                            *doxygen_verbose_open*
+g:doxygen_verbose_open
+                        Display a message on the status bar when the doxygen
+                        documentation is opened on the browser using the
+                        command :|DoxygenOpen|. Normally, used
+                        through a keybinding.
+
+                        Defaults to "1".
 
 
 =============================================================================

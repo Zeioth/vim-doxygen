@@ -84,10 +84,10 @@ let g:doxygen_cmd = get(g:, 'doxygen_cmd', 'cd ./doxygen/ && doxygen ./Doxyfile'
 let g:doxygen_browser_cmd = get(g:, 'doxygen_browser_cmd', 'xdg-open')
 let g:doxygen_browser_file = get(g:, 'doxygen_browser_file', '/doxygen/html/index.html')
 
-" Doxygen - Keyboard | Keybindings | kb
-" (recomended: <C-h> and <C-k>)
-let g:doxygen_shortcut_regen = get(g:, 'doxygen_shortcut_regen', '')
-let g:doxygen_shortcut_open = get(g:, 'doxygen_shortcut_open', '')
+" Doxygen - Verbose
+let g:doxygen_verbose_manual_regen = get(g:, 'doxygen_verbose_open', '1')
+let g:doxygen_verbose_open = get(g:, 'doxygen_verbose_open', '1')
+
 
 " }}}
 

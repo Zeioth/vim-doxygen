@@ -238,9 +238,14 @@ endfunction
 
 " (Re)Generate the docs for the current project.
 function! s:manual_doxygen_regen(bufno) abort
-    if g:doxygen_enabled
-      echo '(Re)generating doxygen documentation.'
-      "call s:update_doxygen(a:bufno, 0, 2)
+    if g:doxygen_enabled == 1
+      "visual feedback"
+      if g:doxygen_verbose_manual_regen == 1
+        echo 'Manually regenerating doxygen documentation.'
+      endif
+
+      " Run async
+      let job = job_start('call s:update_doxygen(' . a:bufno . ', 0, 2 . )')
     endif
 endfunction
 
@@ -249,7 +254,12 @@ function! s:doxygen_open() abort
     try
         let l:bn = bufnr('%')
         let l:proj_dir = getbufvar(l:bn, 'doxygen_root')
-        echo g:doxygen_browser_cmd . ' ' . l:proj_dir . g:doxygen_browser_file
+
+        "visual feedback"
+        if g:doxygen_verbose_open == 1
+          echo g:doxygen_browser_cmd . ' ' . l:proj_dir . g:doxygen_browser_file
+        endif
+
         call system(g:doxygen_browser_cmd . ' ' . l:proj_dir . g:doxygen_browser_file)
     endtry
 endfunction
