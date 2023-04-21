@@ -323,7 +323,7 @@ g:doxygen_cmd
 
                         Please, take the default value of this global as reference.
 
-                        Defaults to "cd ./.project-documentation/doxygen-conf/ && doxygen ./doxyfile.dox".
+                        Defaults to "cd ./.project-documentation/doxygen-conf/ && doxygen ./DoxyFile".
 
 
                                             *doxygen_browser_cmd*

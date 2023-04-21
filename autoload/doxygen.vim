@@ -302,7 +302,6 @@ function! s:update_doxygen(bufno, write_mode, queue_mode) abort
         if g:doxygen_auto_setup == 1
           let g:doxygen_clone_template_cmd = g:doxygen_clone_cmd . " " . g:doxygen_clone_config_repo . " " . g:doxygen_clone_destiny_dir . " " . g:doxygen_clone_post_cmd
           call system(g:doxygen_clone_template_cmd)
-          echo g:doxygen_clone_template_cmd
         endif       
 
         " Generate the doxygen docs where specified.
