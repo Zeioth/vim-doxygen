@@ -55,7 +55,7 @@ It is also possible to disable this plugin for a single project. For that, creat
 
 ## Cool features of this plugin
 
-* Automated doxygen setup for your project. → Creates the doxyfile locally, or from a repository.
+* Automated doxygen setup for your project. → Creates the doxyfile from a repository (by default), or locally using "doxygen -g".
 * Documentation is automatically generated as you work.
 * Shortcut to open the documentation in your browser
 * Shortcut to manually generate documentation (if you don't like the auto mode)
