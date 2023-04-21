@@ -222,8 +222,10 @@ function! doxygen#setup_doxygen() abort
     command! -buffer -bang DoxygenOpen :call s:doxygen_open()
 
     " Keybindings
-    nmap <silent> g:doxygen_shortcut_regen :<C-u>DoxygenRegen<CR>
-    nmap <silent> g:doxygen_shortcut_open :<C-u>DoxygenOpen<CR>
+    "nmap <silent> <C-k> :<C-u>DoxygenRegen<CR>
+    "nmap <silent> <C-h> :<C-u>DoxygenOpen<CR>
+    nmap <silent> g:doxygen_shortcut_regen . :<C-u>DoxygenRegen<CR>
+    nmap <silent> g:doxygen_shortcut_open . :<C-u>DoxygenOpen<CR>
 
 endfunction
 
@@ -235,25 +237,11 @@ endfunction
 "  Doxygen Management {{{
 
 " (Re)Generate the docs for the current project.
-function! s:manual_doxygen_regen(bang) abort
-    let l:restore_prev_trace = 0
-    let l:prev_trace = g:doxygen_trace
-    if &verbose > 0
-        let g:doxygen_trace = 1
-        let l:restore_prev_trace = 1
+function! s:manual_doxygen_regen(bufno) abort
+    if g:doxygen_enabled
+      echo '(Re)generating doxygen documentation.'
+      "call s:update_doxygen(a:bufno, 0, 2)
     endif
-
-    try
-        let l:bn = bufnr('%')
-        for module in g:doxygen_modules
-            call s:update_doxygen(l:bn, module, a:bang, 0)
-        endfor
-        silent doautocmd User doxygenUpdating
-    finally
-        if l:restore_prev_trace
-            let g:doxygen_trace = l:prev_trace
-        endif
-    endtry
 endfunction
 
 " Open doxygen in the browser.

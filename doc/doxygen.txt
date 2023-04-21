@@ -317,8 +317,7 @@ g:doxygen_auto_regen
                         the documentation for you.
 
                         If you prefer to generate the docs manually, you can
-                        use the command |DoxygenRegen|, or
-                        |doxygen_shortcut_regen|. In this case you might want
+                        use the command |DoxygenRegen|. In this case you might want
                         to set this this global to 0.
 
                         Defaults to 1.
@@ -354,35 +353,9 @@ g:doxygen_browser_cmd
                                             *doxygen_browser_file*
 g:doxygen_browser_file
                         The file that will be opened by the command
-                        |DoxygenOpen| or the keybinding defined in
-                        |doxygen_shortcut_open|.
+                        |DoxygenOpen|..
 
                         Defaults to "/doxygen/html/index.html".
-
-                                            *doxygen_shortcut_regen*
-g:doxygen_shortcut_regen
-                        Customizable keybinding / kb / shortcut to manually
-                        regen Doxygen documentation.
-
-                        We let users to define keybindings, to avoid
-                        colisions.
-
-                        Defaults to "".
-
-
-                                            *doxygen_shortcut_open*
-g:doxygen_shortcut_open
-                        Customizable keybinding / kb / shortcut to open
-                        the documentation.
-
-                        To configure what this keybinding does, check
-                        |doxygen_browser_cmd| and |doxygen_browser_file|.
-
-                        We let users to define keybindings, to avoid
-                        colisions.
-
-                        Defaults to "".
-
 
 
 =============================================================================
