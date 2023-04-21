@@ -62,12 +62,8 @@ This project started as a hack of [vim-guttentags](https://github.com/ludoviccha
 
 * Record a cool video.
 
-## Minor bugs 
-* After cloning, we should delete the .git directory and similar, to avoid potential problems.
-* The bootstrap version seems outdated. We should distribute a default doxyfile for now.
-
 ## Improvements
-* If the user tries to open the doxigen docs and they have not been generated yet, throw an error.
+* The bootstrap version seems outdated. We should distribute a default doxyfile for now.
 * Offer a way to use a local doxyfile.
 * Use the helpers to make sure all directories defined by default work on all operative systems.
 
