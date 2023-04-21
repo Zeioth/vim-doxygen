@@ -17,9 +17,10 @@ let g:doxygen_clone_config_repo = 'https://github.com/Zeioth/doxygenvim-template
 let g:doxygen_clone_destiny_dir = './doxygen'
 let g:doxygen_clone_cmd = 'git clone'
 
-" Shortcuts to open and generate docs (DISALED BY DEFAULT)
-let g:doxygen_shortcut_open = '<C-k>'
-let g:doxygen_shortcut_generate = '<C-h>'
+" Shortcuts to open and generate docs (DISALED BY DEFAULT, YOU MUST DEFINE THEM)
+nmap <silent> <C-k> :<C-u>DoxygenRegen<CR>
+nmap <silent> <C-h> :<C-u>DoxygenOpen<CR>
+
 
 " You can configure how the docs are open when using g:doxygen_shortcut_open
 let g:doxygen_browser_cmd = 'xdg-open'
