@@ -299,7 +299,7 @@ g:doxygen_local_cmd
                         Command to run to create the doxygen directory when
                         |doxygen_local_mode| is enabled.
 
-                        Defaults to "mkdir -p ./doxygen && cd ./doxygen && doxygen -g DoxyFile".
+                        Defaults to "mkdir -p ./doxygen && cd ./doxygen && doxygen -g Doxyfile".
 
                                             *doxygen_clone_post_cmd*
 g:doxygen_clone_post_cmd
@@ -338,7 +338,7 @@ g:doxygen_cmd
 
                         Please, take the default value of this global as reference.
 
-                        Defaults to "cd ./doxygen && doxygen ./DoxyFile".
+                        Defaults to "cd ./doxygen && doxygen ./Doxyfile".
 
 
                                             *doxygen_browser_cmd*

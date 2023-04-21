@@ -66,7 +66,7 @@ let g:doxygen_define_advanced_commands = get(g:, 'doxygen_define_advanced_comman
 
 let g:doxygen_auto_setup = get(g:, 'doxygen_auto_setup', 1)
 
-" Doxygen - Clone DoxyFile from a repository
+" Doxygen - Clone Doxyfile from a repository
 let g:doxygen_clone_config_repo = get(g:, 'doxygen_clone_config_repo', 'https://github.com/Zeioth/vim-doxygen-template.git')
 let g:doxygen_clone_cmd = get(g:, 'doxygen_clone_cmd', 'git clone')
 let g:doxygen_clone_destiny_dir = get(g:, 'doxygen_clone_destiny_dir', './doxygen')
@@ -74,11 +74,11 @@ let g:doxygen_clone_post_cmd = get(g:, 'doxygen_clone_post_cmd', '&& rm -r ' . g
 
 " Doxygen - Local mode (disables cloning)
 let g:doxygen_local_mode = get(g:, 'doxygen_local_enabled', 0)
-let g:doxygen_local_cmd = get(g:, 'doxygen_local_cmd', 'mkdir -p ./doxygen && cd ./doxygen && doxygen -g DoxyFile')
+let g:doxygen_local_cmd = get(g:, 'doxygen_local_cmd', 'mkdir -p ./doxygen && cd ./doxygen && doxygen -g Doxyfile')
 
 " Doxygen - Auto regen
 let g:doxygen_auto_regen = get(g:, 'doxygen_auto_regen', 1)
-let g:doxygen_cmd = get(g:, 'doxygen_cmd', 'cd ./doxygen/ && doxygen ./DoxyFile')
+let g:doxygen_cmd = get(g:, 'doxygen_cmd', 'cd ./doxygen/ && doxygen ./Doxyfile')
 
 " Doxygen - Open on browser
 let g:doxygen_browser_cmd = get(g:, 'doxygen_browser_cmd', 'xdg-open')
