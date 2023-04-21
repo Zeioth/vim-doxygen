@@ -86,9 +86,6 @@ endif
 
 " Doxygen helper methods {{{
 
-let s:known_files = []
-let s:known_projects = {}
-
 " Finds the first directory with a project marker by walking up from the given
 " file path.
 function! doxygen#get_project_root(path) abort
@@ -288,7 +285,6 @@ endfunction
 "   2: if an update is already in progress, queue another one.
 function! s:update_doxygen(bufno, write_mode, queue_mode) abort
     " figure out where to save.
-    let l:buf_doxygen_files = getbufvar(a:bufno, 'doxygen_files')
     let l:proj_dir = getbufvar(a:bufno, 'doxygen_root')
 
     " Switch to the project root to make the command line smaller, and make
@@ -306,14 +302,12 @@ function! s:update_doxygen(bufno, write_mode, queue_mode) abort
             let g:doxygen_clone_template_cmd = g:doxygen_clone_cmd . " " . g:doxygen_clone_config_repo . " " . g:doxygen_clone_destiny_dir . " " . g:doxygen_clone_post_cmd
             call system(g:doxygen_clone_template_cmd)
           endif
-
         endif       
 
         " Generate the doxygen docs where specified.
         if g:doxygen_auto_regen == 1
           call system(g:doxygen_cmd)
         endif       
-
 
     catch /^doxygen\:/
         echom "Error while generating ".a:module." file:"
