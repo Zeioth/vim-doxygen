@@ -55,7 +55,7 @@ It is also possible to disable this plugin for a single project. For that, creat
 
 ## Cool features of this plugin
 
-* Automated doxygen setup for your project. → Creates the doxyfile [from a repository](https://github.com/Zeioth/vim-doxygen-template) (by default), or locally using "doxygen -g" when g:doxygen_local_enabled=1.
+* Automated doxygen setup for your project. → Creates the doxyfile [from a repository](https://github.com/Zeioth/vim-doxygen-template) (by default), or locally.
 * Documentation is automatically generated as you work.
 * Shortcut to open the documentation in your browser
 * Shortcut to manually generate documentation (if you don't like the auto mode)
