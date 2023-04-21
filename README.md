@@ -17,9 +17,10 @@ let g:doxygen_clone_config_repo = 'https://github.com/Zeioth/doxygenvim-template
 let g:doxygen_clone_destiny_dir = './doxygen'
 let g:doxygen_clone_cmd = 'git clone'
 
-" Shortcuts to open and generate docs (DISALED BY DEFAULT)
-let g:doxygen_shortcut_open = '<C-k>'
-let g:doxygen_shortcut_generate = '<C-h>'
+" Shortcuts to open and generate docs (DISALED BY DEFAULT, YOU MUST DEFINE THEM)
+nmap <silent> <C-k> :<C-u>DoxygenRegen<CR>
+nmap <silent> <C-h> :<C-u>DoxygenOpen<CR>
+
 
 " You can configure how the docs are open when using g:doxygen_shortcut_open
 let g:doxygen_browser_cmd = 'xdg-open'
@@ -29,7 +30,7 @@ let g:doxygen_browser_file = './doxygen/html/index.html'
 Enable automated doc generation on save
 ```
 " By default, the docs can be accessed on "./doxygen/html/index.html".
-" This is defined in DoxyFile
+" This is defined in Doxyfile
 g:doxygen_auto_regen = 1
 ```
 
@@ -37,7 +38,7 @@ Specify a custom command to generate the doxygen documentation (optional)
 
 ```
 " Go to a directory and run doxygen'
-g:doxygen_cmd = 'cd ./doxygen/ && doxygen ./DoxyFile'
+g:doxygen_cmd = 'cd ./doxygen/ && doxygen ./Doxyfile'
 ```
 
 Change the way the root of the project is detected (optional)
@@ -63,7 +64,7 @@ It is also possible to disable this plugin for a single project. For that, creat
 
 ## FAQ
 
-* **Can I have a different DoxyFile per project?** Yes. Even if you have auto setup enabled, the doxygen directory will only be created once. So you can customize the doxyfile for every project individually.
+* **Can I have a different Doxyfile per project?** Yes. Even if you have auto setup enabled, the doxygen directory will only be created once. So you can customize the doxyfile for every project individually.
 
 ## PRs that will be accepted (Help needed)
 
