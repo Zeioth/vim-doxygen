@@ -300,8 +300,13 @@ function! s:update_doxygen(bufno, write_mode, queue_mode) abort
         " Clone the doxygen config into the project where specified.
         " TODO: Only if directory doesn't exist already
         if g:doxygen_auto_setup == 1
-          let g:doxygen_clone_template_cmd = g:doxygen_clone_cmd . " " . g:doxygen_clone_config_repo . " " . g:doxygen_clone_destiny_dir . " " . g:doxygen_clone_post_cmd
-          call system(g:doxygen_clone_template_cmd)
+          if g:doxygen_local_mode == 1
+            call system(g:doxygen_local_cmd)
+          else
+            let g:doxygen_clone_template_cmd = g:doxygen_clone_cmd . " " . g:doxygen_clone_config_repo . " " . g:doxygen_clone_destiny_dir . " " . g:doxygen_clone_post_cmd
+            call system(g:doxygen_clone_template_cmd)
+          endif
+
         endif       
 
         " Generate the doxygen docs where specified.

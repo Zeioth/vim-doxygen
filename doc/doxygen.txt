@@ -286,6 +286,21 @@ g:doxygen_clone_destiny_dir
 
                         Defaults to "./doxygen".
 
+                                            *doxygen_local_mode*
+g:doxygen_local_mode
+                        When its value is 1, vim-doxygen will use |doxygen_local_cmd|
+                        to create the doxigen directory instead of cloning it
+                        from a repository.
+
+                        Defaults to 0.
+
+                                            *doxygen_local_cmd*
+g:doxygen_local_cmd
+                        Command to run to create the doxygen directory when
+                        |doxygen_local_mode| is enabled.
+
+                        Defaults to "mkdir -p ./doxygen && cd ./doxygen && doxygen -g DoxyFile".
+
                                             *doxygen_clone_post_cmd*
 g:doxygen_clone_post_cmd
                         Command to execute after the config repository is
