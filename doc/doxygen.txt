@@ -284,7 +284,7 @@ g:doxygen_clone_destiny_dir
                         Where to clone the doxyfile directory from the
                         projec's root directory.
 
-                        Defaults to "./.project-documentation".
+                        Defaults to "./doxygen".
 
                                             *doxygen_clone_post_cmd*
 g:doxygen_clone_post_cmd
@@ -323,7 +323,7 @@ g:doxygen_cmd
 
                         Please, take the default value of this global as reference.
 
-                        Defaults to "cd ./.project-documentation/doxygen-conf/ && doxygen ./DoxyFile".
+                        Defaults to "cd ./doxygen/doxygen-conf/ && doxygen ./DoxyFile".
 
 
                                             *doxygen_browser_cmd*
@@ -342,7 +342,7 @@ g:doxygen_browser_file
                         |DoxygenOpen| or the keybinding defined in
                         |doxygen_shortcut_open|.
 
-                        Defaults to "/.project-documentation/html/index.html".
+                        Defaults to "/doxygen/html/index.html".
 
                                             *doxygen_shortcut_regen*
 g:doxygen_shortcut_regen

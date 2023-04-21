@@ -68,16 +68,16 @@ let g:doxygen_auto_setup = get(g:, 'doxygen_auto_setup', 1)
 
 let g:doxygen_clone_config_repo = get(g:, 'doxygen_clone_config_repo', 'https://github.com/Zeioth/vim-doxygen-template.git')
 let g:doxygen_clone_cmd = get(g:, 'doxygen_clone_cmd', 'git clone')
-let g:doxygen_clone_destiny_dir = get(g:, 'doxygen_clone_destiny_dir', './.project-documentation')
+let g:doxygen_clone_destiny_dir = get(g:, 'doxygen_clone_destiny_dir', './doxygen')
 let g:doxygen_clone_post_cmd = get(g:, 'doxygen_clone_post_cmd', '&& rm -r ' . g:doxygen_clone_destiny_dir . '/.git')
 
 " Doxygen - Auto regen
 let g:doxygen_auto_regen = get(g:, 'doxygen_auto_regen', 1)
-let g:doxygen_cmd = get(g:, 'doxygen_cmd', 'cd ./.project-documentation/doxygen-conf/ && doxygen ./DoxyFile')
+let g:doxygen_cmd = get(g:, 'doxygen_cmd', 'cd ./doxygen/doxygen-conf/ && doxygen ./doxyfile.dox')
 
 " Doxygen - Open on browser
 let g:doxygen_browser_cmd = get(g:, 'doxygen_browser_cmd', 'xdg-open')
-let g:doxygen_browser_file = get(g:, 'doxygen_browser_file', '/.project-documentation/html/index.html')
+let g:doxygen_browser_file = get(g:, 'doxygen_browser_file', '/doxygen/html/index.html')
 
 " Doxygen - Keyboard | Keybindings | kb
 " (recomended: <C-h> and <C-k>)
