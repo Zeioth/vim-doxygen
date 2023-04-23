@@ -42,7 +42,7 @@ Enable automated doc generation on save (optional)
 ```
 " By default, the docs can be accessed on "./doxygen/html/index.html".
 " This is defined in Doxyfile
-g:doxygen_auto_regen = 1
+let g:doxygen_auto_regen = 1
 
 " You can configure how the documentation is open.
 let g:doxygen_browser_cmd = 'xdg-open'
@@ -53,14 +53,14 @@ Custom command to generate the doxygen documentation (optional)
 
 ```
 " Go to a directory and run doxygen'
-g:doxygen_cmd = 'cd ./doxygen/ && doxygen ./Doxyfile'
+let g:doxygen_cmd = 'cd ./doxygen/ && doxygen ./Doxyfile'
 ```
 
 Change the way the root of the project is detected (optional)
 
 ```
 " By default, we detect the root of the project where the first .git file is found
-g:doxygen_project_root = ['.git', '.hg', '.svn', '.bzr', '_darcs', '_FOSSIL_', '.fslckout']
+let g:doxygen_project_root = ['.git', '.hg', '.svn', '.bzr', '_darcs', '_FOSSIL_', '.fslckout']
 ```
 
 ## Final notes
