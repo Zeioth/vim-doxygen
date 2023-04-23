@@ -161,9 +161,8 @@ function! doxygen#setup_doxygen() abort
         return
     endif
 
-    " Don't setup doxygen for things that don't need it, or that could
-    " cause problems.
-    if index(g:doxygen_exclude_filetypes, &filetype) >= 0
+    " We only want to use vim-doxygen in the filetypes supported by doxygen
+    if index(g:doxygen_include_filetypes, &filetype) == -1
         return
     endif
 
@@ -245,7 +244,7 @@ function! s:manual_doxygen_regen(bufno) abort
       endif
 
       " Run async
-      let job = job_start('call s:update_doxygen(' . a:bufno . ', 0, 2 . )')
+      call s:update_doxygen(a:bufno , 0, 2 )
     endif
 endfunction
 
@@ -259,7 +258,7 @@ function! s:doxygen_open() abort
         if g:doxygen_verbose_open == 1
           echo g:doxygen_browser_cmd . ' ' . l:proj_dir . g:doxygen_browser_file
         endif
-        let job = job_start('call system(' . g:doxygen_browser_cmd . ' ' . l:proj_dir . g:doxygen_browser_file . ')')
+        call system(g:doxygen_browser_cmd . ' ' . l:proj_dir . g:doxygen_browser_file)
     endtry
 endfunction
 
@@ -291,19 +290,18 @@ function! s:update_doxygen(bufno, write_mode, queue_mode) abort
     try
 
         " Clone the doxygen config into the project where specified.
-        " TODO: Only if directory doesn't exist already
         if g:doxygen_auto_setup == 1
           if g:doxygen_local_mode == 1
-            let job = job_start('call system(' . g:doxygen_local_cmd . ')')
+            call system(g:doxygen_local_cmd)
           else
             let g:doxygen_clone_template_cmd = g:doxygen_clone_cmd . " " . g:doxygen_clone_config_repo . " " . g:doxygen_clone_destiny_dir . " " . g:doxygen_clone_post_cmd
-            let job = job_start('call system(' . g:doxygen_clone_template_cmd . ')')
+            call system(g:doxygen_clone_template_cmd)
           endif
         endif       
 
         " Generate the doxygen docs where specified.
         if g:doxygen_auto_regen == 1
-          let job = job_start('call system(' . g:doxygen_cmd . ')')
+          call system(g:doxygen_cmd)
         endif       
 
     catch /^doxygen\:/

@@ -45,7 +45,7 @@ let g:doxygen_project_root_finder = get(g:, 'doxygen_project_root_finder', '')
 let g:doxygen_exclude_project_root = get(g:, 'doxygen_exclude_project_root', 
             \['/usr/local', '/opt/homebrew', '/home/linuxbrew/.linuxbrew'])
 
-let g:doxygen_exclude_filetypes = get(g:, 'doxygen_exclude_filetypes', [])
+let g:doxygen_include_filetypes = get(g:, 'doxygen_include_filetypes', ['c', 'cpp', 'cs', 'python', 'd', 'fortran', 'java', 'perl', 'vhdl', 'objc', 'php'])
 let g:doxygen_resolve_symlinks = get(g:, 'doxygen_resolve_symlinks', 0)
 let g:doxygen_generate_on_new = get(g:, 'doxygen_generate_on_new', 1)
 let g:doxygen_generate_on_write = get(g:, 'doxygen_generate_on_write', 1)

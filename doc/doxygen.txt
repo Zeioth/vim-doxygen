@@ -140,13 +140,15 @@ g:doxygen_project_root
                         `['.git', '.hg', '.svn', '.bzr', '_darcs', '_darcs', '_FOSSIL_', '.fslckout']`
 
 
-                                                *doxygen_exclude_filetypes*
-g:doxygen_exclude_filetypes
+                                                *doxygen_include_filetypes*
+g:doxygen_include_filetypes
                         A |List| of file types (see |'filetype'|) that doxygen
-                        should ignore. When a buffer is opened, if its
+                        should use. When a buffer is opened, if its
                         'filetype' is found in this list, doxygen features
-                        won't be available for this buffer.
-                        Defaults to an empty list (`[]`).
+                        will be available for this buffer.
+
+                        Defaults to doxygen officially supported languages:
+                        (`['c', 'cpp', 'cs', 'python', 'd', 'fortran', 'java', 'perl', 'vhdl', 'objc', 'php']`).
 
                                                 *doxygen_exclude_project_root*
 g:doxygen_exclude_project_root
