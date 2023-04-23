@@ -23,7 +23,6 @@ Copy this in your vimconfig:
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim doxygen
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" If you need rust support, please consider using 'cargo --doc'
 
 " Enable it for the next languages
 let g:doxygen_include_filetypes = ['c', 'cpp', 'cs', 'python', 'd', 'fortran', 'java', 'perl', 'vhdl', 'objc', 'php']
