@@ -258,7 +258,7 @@ function! s:doxygen_open() abort
         if g:doxygen_verbose_open == 1
           echo g:doxygen_browser_cmd . ' ' . l:proj_dir . g:doxygen_browser_file
         endif
-        call system(g:doxygen_browser_cmd . ' ' . l:proj_dir . g:doxygen_browser_file)
+        call job_start(['sh', '-c', g:doxygen_browser_cmd . ' ' . l:proj_dir . g:doxygen_browser_file], {})
     endtry
 endfunction
 
@@ -292,16 +292,16 @@ function! s:update_doxygen(bufno, write_mode, queue_mode) abort
         " Clone the doxygen config into the project where specified.
         if g:doxygen_auto_setup == 1
           if g:doxygen_local_mode == 1
-            call system(g:doxygen_local_cmd)
+            call job_start(['sh', '-c', g:doxygen_local_cmd], {})
           else
             let g:doxygen_clone_template_cmd = g:doxygen_clone_cmd . " " . g:doxygen_clone_config_repo . " " . g:doxygen_clone_destiny_dir . " " . g:doxygen_clone_post_cmd
-            call system(g:doxygen_clone_template_cmd)
+            call job_start(['sh', '-c', g:doxygen_clone_template_cmd], {})
           endif
         endif       
 
         " Generate the doxygen docs where specified.
         if g:doxygen_auto_regen == 1
-          call system(g:doxygen_cmd)
+          call job_start(['sh', '-c', g:doxygen_cmd], {})
         endif       
 
     catch /^doxygen\:/
