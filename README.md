@@ -35,7 +35,6 @@ augroup doxygen_mappings
     "execute 'autocmd FileType ' . ft . ' nnoremap <buffer> <C-k> :<C-u>DoxygenRegen<CR>'
   endfor
 augroup END
-
 ```
 
 ## Most frecuent options users customize
