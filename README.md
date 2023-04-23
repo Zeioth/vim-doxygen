@@ -25,7 +25,7 @@ Copy this in your vimconfig:
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " If you need rust support, please consider using 'cargo --doc'
 
-" Enable for the next languages
+" Enable it for the next languages
 let g:doxygen_include_filetypes = ['c', 'cpp', 'cs', 'python', 'd', 'fortran', 'java', 'perl', 'vhdl', 'objc', 'php']
 
 " Enable the keybindings, for the included_filetypes
