@@ -17,13 +17,28 @@ Please use <:h doxygen> on vim to read the [full documentation](https://github.c
 
 ## How to use
 
-You just need to define the next keybindings (you MUST setup this)
+Copy this in your vimconfig:
 
 ```
-" Shortcuts to open and generate docs
-nmap <silent> <C-k> :<C-u>DoxygenRegen<CR>
-nmap <silent> <C-h> :<C-u>DoxygenOpen<CR>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim doxygen
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" If you need rust support, please consider using 'cargo --doc'
+
+" Enable for the next languages
+let g:doxygen_include_filetypes = ['c', 'cpp', 'cs', 'python', 'd', 'fortran', 'java', 'perl', 'vhdl', 'objc', 'php']
+
+" Enable the keybindings, for the included_filetypes
+augroup doxygen_mappings
+  for ft in g:doxygen_include_filetypes
+    execute 'autocmd FileType ' . ft . ' nnoremap <buffer> <C-h> :<C-u>DoxygenOpen<CR>'
+    "execute 'autocmd FileType ' . ft . ' nnoremap <buffer> <C-k> :<C-u>DoxygenRegen<CR>'
+  endfor
+augroup END
+
 ```
+
+## Most frecuent options users customize
 
 Enable automated doxyfile generation (optional)
 
@@ -40,10 +55,13 @@ let g:doxygen_clone_cmd = 'git clone'
 
 Enable automated doc generation on save (optional)
 ```
-" By default, the docs can be accessed on "./doxygen/html/index.html".
-" This is defined in Doxyfile
+" Enabled by default for the languages defined in g:typedoc_include_filetypes
+" By default, the docs will be generated on "./doxygen/html/index.html".
 let g:doxygen_auto_regen = 1
+```
 
+Change the way the documentation is opened (optional)
+```
 " You can configure how the documentation is open.
 let g:doxygen_browser_cmd = 'xdg-open'
 let g:doxygen_browser_file = './doxygen/html/index.html'
@@ -52,7 +70,6 @@ let g:doxygen_browser_file = './doxygen/html/index.html'
 Custom command to generate the doxygen documentation (optional)
 
 ```
-" Go to a directory and run doxygen'
 let g:doxygen_cmd = 'cd ./doxygen/ && doxygen ./Doxyfile'
 ```
 
@@ -76,6 +93,7 @@ It is also possible to disable this plugin for a single project. For that, creat
 * Shortcut to open the documentation in your browser
 * Shortcut to manually generate documentation (if you don't like the auto mode)
 * Easy to use doxygen themes
+* Fully async
 
 ## FAQ
 
