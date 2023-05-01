@@ -46,7 +46,7 @@ Enable automated doxyfile generation (optional)
 g:doxygen_auto_setup = 1
 
 " OPTIONAL: You can provide a custom Doxyfile.
-let g:doxygen_clone_config_repo = 'https://github.com/Zeioth/doxygenvim-template.git'
+let g:doxygen_clone_config_repo = 'https://github.com/Zeioth/doxygen-vim-template.git'
 let g:doxygen_clone_destiny_dir = './doxygen'
 let g:doxygen_clone_cmd = 'git clone'
 ```
