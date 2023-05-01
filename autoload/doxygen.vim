@@ -220,12 +220,6 @@ function! doxygen#setup_doxygen() abort
     command! -buffer -bang DoxygenRegen :call s:manual_doxygen_regen(<bang>0)
     command! -buffer -bang DoxygenOpen :call s:doxygen_open()
 
-    " Keybindings
-    "nmap <silent> <C-k> :<C-u>DoxygenRegen<CR>
-    "nmap <silent> <C-h> :<C-u>DoxygenOpen<CR>
-    nmap <silent> g:doxygen_shortcut_regen . :<C-u>DoxygenRegen<CR>
-    nmap <silent> g:doxygen_shortcut_open . :<C-u>DoxygenOpen<CR>
-
 endfunction
 
 " }}}
