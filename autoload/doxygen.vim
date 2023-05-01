@@ -194,9 +194,6 @@ function! doxygen#setup_doxygen() abort
         endif
 
         let b:doxygen_files = {}
-        " for module in g:doxygen_modules
-        "     call call("doxygen#".module."#init", [b:doxygen_root])
-        " endfor
     catch /^doxygen\:/
         call doxygen#trace("No doxygen support for this buffer.")
         return

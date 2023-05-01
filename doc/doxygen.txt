@@ -271,7 +271,7 @@ g:doxygen_clone_config_repo
                         only and it is strongly encouraged for users to fork
                         and customize. This improves security too.
 
-                        Defaults to "https://github.com/Zeioth/doxygenvim-template.git".
+                        Defaults to "https://github.com/Zeioth/doxygen-vim-template.git".
 
 
                                             *doxygen_clone_cmd*
