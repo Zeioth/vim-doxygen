@@ -99,7 +99,7 @@ It is also possible to disable this plugin for a single project. For that, creat
 
 ## PRs that will be accepted (Help needed)
 
-* Windows support: It should be functional, but if it isn't, please consider submitting a PR so everyone can benefit from it. → Use the path helpers you will find in 'autoload/doxygen.dim' to make sure all directories defined by default on the global variables defined on 'plugin/doxygen.vim 'work on all operative systems.
+* Windows support: It should be functional, but if it isn't, please consider submitting a PR so everyone can benefit from it. → Use the path helpers you will find in 'autoload/doxygen.vim' to make sure all directories defined by default on the global variables defined on 'plugin/doxygen.vim 'work on all operative systems.
 
 ## Credits
 This project started as a hack of [vim-guttentags](https://github.com/ludovicchabant/vim-gutentags). We use its boiler plate functions to manage directories in vimscript with good compatibility across operative systems. So please support its author too if you can!
